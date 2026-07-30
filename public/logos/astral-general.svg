@@ -1,15 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 72" fill="none" role="img" aria-label="Astral">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 72" width="300" height="72" fill="none" role="img" aria-label="Astral">
   <title>Astral</title>
   <g transform="translate(8 8)">
     <rect width="56" height="56" rx="14" fill="#0F766E"/>
-    <g transform="translate(5.25 5.25) scale(0.089)">
-  <line x1="242" y1="156" x2="363" y2="343" stroke="#F0FDFA" stroke-width="40" stroke-linecap="round"/>
-  <line x1="363" y1="343" x2="142" y2="416" stroke="#F0FDFA" stroke-width="34" stroke-linecap="round"/>
-  <circle cx="242" cy="156" r="118" fill="#F0FDFA"/>
-  <circle cx="363" cy="343" r="76" fill="#F0FDFA"/>
-  <circle cx="142" cy="416" r="52" fill="#F0FDFA"/>
+    <g fill="#F0FDFA" stroke="#F0FDFA" stroke-linecap="round">
+      <line x1="25.7" y1="18.1" x2="36.4" y2="34.8" stroke-width="3.5"/>
+      <line x1="36.4" y1="34.8" x2="16.8" y2="41.2" stroke-width="3"/>
+      <circle cx="25.7" cy="18.1" r="10.5" stroke="none"/>
+      <circle cx="36.4" cy="34.8" r="6.8" stroke="none"/>
+      <circle cx="16.8" cy="41.2" r="4.6" stroke="none"/>
     </g>
   </g>
-  <text x="78" y="42" fill="#14201C" font-family="Outfit, Noto Sans SC, system-ui, sans-serif" font-size="32" font-weight="800" letter-spacing="-0.04em">Astral</text>
-  <text x="78" y="60" fill="#6B7C74" font-family="Outfit, Noto Sans SC, system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.22em">GENERAL</text>
+  <text x="78" y="42" fill="#14201C" font-family="Outfit, 'Noto Sans SC', system-ui, sans-serif" font-size="32" font-weight="800" letter-spacing="-0.04em">Astral</text>
+  <text x="78" y="60" fill="#6B7C74" font-family="Outfit, 'Noto Sans SC', system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.22em">GENERAL</text>
 </svg>
