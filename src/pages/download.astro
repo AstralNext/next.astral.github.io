@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import { products } from '../site';
+---
+
+<Base
+  title="下载"
+  description="下载 Astral 通用版与 Astral Game。"
+  currentPath="/download/"
+>
+  <section class="section">
+    <div class="shell">
+      <div class="section-head reveal">
+        <p class="section-kicker teal">Download</p>
+        <h1 class="section-title">下载 Astral</h1>
+        <p class="section-lead">两个产品，按你的用法选一个。安装包发布在 GitHub Releases（正式包未就绪时页面仍指向仓库发布页）。</p>
+      </div>
+
+      <div class="download-grid">
+        <article id="general" class="download-block reveal">
+          <p class="section-kicker teal">{products.general.label}</p>
+          <img class="product-logo product-logo-sm" src={products.general.logo} alt="" width="240" height="62" data-logo-light={products.general.logo} data-logo-dark={products.general.logoDark} />
+          <p>{products.general.blurb}。适合需要多实例与配置控制的用户。</p>
+          <div class="btn-row">
+            <a class="btn btn-teal" href={products.general.releases} target="_blank" rel="noopener noreferrer">
+              {products.general.downloadLabel}
+            </a>
+            <a class="btn btn-ghost" href={products.general.repo} target="_blank" rel="noopener noreferrer">仓库</a>
+          </div>
+        </article>
+
+        <article id="game" class="download-block reveal">
+          <p class="section-kicker amber">{products.game.label}</p>
+          <img class="product-logo product-logo-sm" src={products.game.logo} alt="" width="260" height="62" data-logo-light={products.game.logo} data-logo-dark={products.game.logoDark} />
+          <p>{products.game.blurb}。适合想快速建房联机的玩家。</p>
+          <div class="btn-row">
+            <a class="btn btn-amber" href={products.game.releases} target="_blank" rel="noopener noreferrer">
+              {products.game.downloadLabel}
+            </a>
+            <a class="btn btn-ghost" href={products.game.repo} target="_blank" rel="noopener noreferrer">仓库</a>
+          </div>
+        </article>
+      </div>
+
+      <p class="note reveal">
+        不确定选哪个？回到
+        <a href="/">首页</a>
+        看两种用法的对比入口。链接统一维护在 <code>src/site.ts</code>。
+      </p>
+    </div>
+  </section>
+</Base>

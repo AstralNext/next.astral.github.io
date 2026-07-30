@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 72" fill="none" role="img" aria-label="Astral">
+  <title>Astral</title>
+  <g transform="translate(8 8)">
+    <rect width="56" height="56" rx="14" fill="#0F766E"/>
+    <g transform="translate(5.25 5.25) scale(0.089)">
+  <line x1="242" y1="156" x2="363" y2="343" stroke="#F0FDFA" stroke-width="40" stroke-linecap="round"/>
+  <line x1="363" y1="343" x2="142" y2="416" stroke="#F0FDFA" stroke-width="34" stroke-linecap="round"/>
+  <circle cx="242" cy="156" r="118" fill="#F0FDFA"/>
+  <circle cx="363" cy="343" r="76" fill="#F0FDFA"/>
+  <circle cx="142" cy="416" r="52" fill="#F0FDFA"/>
+    </g>
+  </g>
+  <text x="78" y="42" fill="#E8F0EC" font-family="Outfit, Noto Sans SC, system-ui, sans-serif" font-size="32" font-weight="800" letter-spacing="-0.04em">Astral</text>
+  <text x="78" y="60" fill="#84948C" font-family="Outfit, Noto Sans SC, system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.22em">GENERAL</text>
+</svg>

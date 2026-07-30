@@ -1,0 +1,197 @@
+---
+import { site } from '../site';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  currentPath?: string;
+}
+
+const {
+  title = 'Astral',
+  description = 'Astral 下一代组网：通用版与游戏版，一套内核，两种用法。',
+  currentPath = '/',
+} = Astro.props;
+
+const pageTitle = title === 'Astral' ? 'Astral · Next' : `${title} · Astral`;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f4f7f5" data-theme-color />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <title>{pageTitle}</title>
+    <script is:inline>
+      (() => {
+        const key = 'astral-theme';
+        const stored = localStorage.getItem(key);
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = stored === 'light' || stored === 'dark' ? stored : systemDark ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[data-theme-color]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0c1210' : '#f4f7f5');
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="site-fx" aria-hidden="true">
+      <div class="site-fx-base"></div>
+      <svg class="site-fx-defs" width="0" height="0" aria-hidden="true">
+        <defs>
+          <filter id="fx-goo" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur" />
+            <feColorMatrix
+              in="blur"
+              type="matrix"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -10"
+              result="goo"
+            />
+            <feBlend in="SourceGraphic" in2="goo" />
+          </filter>
+        </defs>
+      </svg>
+      <div class="fx-field">
+        <span class="fx-blob fx-blob-a"></span>
+        <span class="fx-blob fx-blob-b"></span>
+        <span class="fx-blob fx-blob-c"></span>
+        <span class="fx-blob fx-blob-d"></span>
+      </div>
+      <div class="fx-ribbon fx-ribbon-a"></div>
+      <div class="fx-ribbon fx-ribbon-b"></div>
+      <div class="fx-mist"></div>
+      <div class="fx-dust"></div>
+      <div class="fx-vignette"></div>
+    </div>
+
+    <div class="site-content">
+    <header class="site-header">
+      <div class="shell site-header-inner">
+        <a class="brand" href="/">
+          <img class="brand-mark" src="/favicon.svg" alt="" width="28" height="28" />
+          Astral<span class="brand-next">Next</span>
+        </a>
+        <nav class="nav" aria-label="主导航">
+          <a href="/astral/" aria-current={currentPath === '/astral/' ? 'page' : undefined}>通用版</a>
+          <a href="/game/" aria-current={currentPath === '/game/' ? 'page' : undefined}>游戏版</a>
+          <a href="/download/" aria-current={currentPath === '/download/' ? 'page' : undefined}>下载</a>
+          <a href="/logos/" aria-current={currentPath === '/logos/' ? 'page' : undefined}>Logo</a>
+          <a class="nav-ext" href={site.docsLegacy} target="_blank" rel="noopener noreferrer">旧文档</a>
+          <a class="nav-ext" href={site.githubOrg} target="_blank" rel="noopener noreferrer">GitHub</a>
+          <button
+            type="button"
+            class="theme-toggle"
+            data-theme-toggle
+            aria-label="切换深色模式"
+            title="切换深色 / 浅色"
+          >
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"></circle>
+              <path
+                d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21M5.6 5.6l1.6 1.6M16.8 16.8l1.6 1.6M5.6 18.4l1.6-1.6M16.8 7.2l1.6-1.6"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"></path>
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M19 13.5A7.5 7.5 0 1 1 10.5 5 6 6 0 0 0 19 13.5Z"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linejoin="round"></path>
+            </svg>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell site-footer-inner">
+        <p>© {new Date().getFullYear()} Astral · 下一代组网门户</p>
+        <div class="footer-links">
+          <a href={site.docsLegacy} target="_blank" rel="noopener noreferrer">astral.fan 文档</a>
+          <a href={site.aml} target="_blank" rel="noopener noreferrer">AML</a>
+          <a href={site.githubOrg} target="_blank" rel="noopener noreferrer">AstralNext</a>
+        </div>
+      </div>
+    </footer>
+    </div>
+
+    <script>
+      const key = 'astral-theme';
+
+      const applyTheme = (theme: 'light' | 'dark') => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem(key, theme);
+        const meta = document.querySelector('meta[data-theme-color]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0c1210' : '#f4f7f5');
+        const btn = document.querySelector('[data-theme-toggle]');
+        if (btn instanceof HTMLButtonElement) {
+          btn.setAttribute(
+            'aria-label',
+            theme === 'dark' ? '切换为浅色模式' : '切换为深色模式',
+          );
+        }
+      };
+
+      const currentTheme = (): 'light' | 'dark' => {
+        const attr = document.documentElement.getAttribute('data-theme');
+        if (attr === 'dark' || attr === 'light') return attr;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      };
+
+      const syncLogos = () => {
+        const dark = currentTheme() === 'dark';
+        document.querySelectorAll<HTMLImageElement>('[data-logo-light][data-logo-dark]').forEach((img) => {
+          const next = dark ? img.dataset.logoDark : img.dataset.logoLight;
+          if (next && img.getAttribute('src') !== next) img.setAttribute('src', next);
+        });
+      };
+
+      document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+        applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+        syncLogos();
+      });
+
+      syncLogos();
+
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
+        if (localStorage.getItem(key)) return;
+        applyTheme(event.matches ? 'dark' : 'light');
+        syncLogos();
+      });
+
+      const nodes = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-in');
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
+        );
+        nodes.forEach((el) => io.observe(el));
+      } else {
+        nodes.forEach((el) => el.classList.add('is-in'));
+      }
+    </script>
+  </body>
+</html>

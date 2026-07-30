@@ -1,0 +1,113 @@
+---
+import Base from '../layouts/Base.astro';
+
+const icons = [
+  {
+    id: 'A1',
+    title: 'Classic Bold',
+    desc: '原版三圆连线 · 加粗',
+    general: '/logos/concepts/icon-classic-bold-general.svg',
+    game: '/logos/concepts/icon-classic-bold-game.svg',
+    generalSoft: '/logos/concepts/icon-classic-bold-general-soft.svg',
+    gameSoft: '/logos/concepts/icon-classic-bold-game-soft.svg',
+  },
+];
+---
+
+<Base
+  title="Logo 预览"
+  description="Astral 应用图标概念预览"
+  currentPath="/logos/"
+>
+  <section class="section logo-preview">
+    <div class="shell">
+      <div class="section-head reveal">
+        <p class="section-kicker teal">Brand</p>
+        <h1 class="section-title">应用图标</h1>
+        <p class="section-lead">已应用为站点正式图标：A1 Classic Bold（通用青绿 / 游戏琥珀）。</p>
+      </div>
+
+      <div class="icon-grid reveal">
+        {icons.map((c) => (
+          <article class="icon-card">
+            <p class="preview-label"><span>{c.id}</span> {c.title}</p>
+            <p class="preview-desc">{c.desc}</p>
+            <div class="icon-row">
+              <a class="icon-tile" href={c.general} target="_blank" rel="noopener"><img src={c.general} alt="" /></a>
+              <a class="icon-tile" href={c.game} target="_blank" rel="noopener"><img src={c.game} alt="" /></a>
+            </div>
+            <div class="icon-row soft">
+              <a class="icon-tile soft" href={c.generalSoft} target="_blank" rel="noopener"><img src={c.generalSoft} alt="" /></a>
+              <a class="icon-tile soft" href={c.gameSoft} target="_blank" rel="noopener"><img src={c.gameSoft} alt="" /></a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style is:global>
+  .logo-preview .section-head { margin-bottom: 1.25rem; }
+
+  .icon-grid {
+    display: grid;
+    gap: 1.1rem;
+    max-width: 28rem;
+  }
+
+  .icon-card {
+    padding: 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .preview-label {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.95rem;
+  }
+
+  .preview-label span {
+    color: var(--teal);
+    margin-right: 0.35rem;
+  }
+
+  .preview-desc {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+
+  .icon-row {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .icon-tile {
+    display: block;
+    width: 7rem;
+    height: 7rem;
+    border-radius: 1.55rem;
+    overflow: hidden;
+    box-shadow:
+      0 1px 0 color-mix(in srgb, var(--ink) 6%, transparent),
+      0 10px 24px color-mix(in srgb, var(--ink) 8%, transparent);
+    transition: transform 0.18s ease;
+  }
+
+  .icon-tile.soft {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 1.15rem;
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 8%, transparent);
+  }
+
+  .icon-tile:hover { transform: translateY(-2px) scale(1.03); }
+  .icon-tile img { width: 100%; height: 100%; display: block; }
+</style>

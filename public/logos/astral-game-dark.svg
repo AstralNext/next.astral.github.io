@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 72" fill="none" role="img" aria-label="Astral Game">
+  <title>Astral Game</title>
+  <g transform="translate(8 8)">
+    <rect width="56" height="56" rx="14" fill="#C27803"/>
+    <g transform="translate(5.25 5.25) scale(0.089)">
+  <line x1="242" y1="156" x2="363" y2="343" stroke="#FFFBEB" stroke-width="40" stroke-linecap="round"/>
+  <line x1="363" y1="343" x2="142" y2="416" stroke="#FFFBEB" stroke-width="34" stroke-linecap="round"/>
+  <circle cx="242" cy="156" r="118" fill="#FFFBEB"/>
+  <circle cx="363" cy="343" r="76" fill="#FFFBEB"/>
+  <circle cx="142" cy="416" r="52" fill="#FFFBEB"/>
+    </g>
+  </g>
+  <text x="78" y="42" fill="#E8F0EC" font-family="Outfit, Noto Sans SC, system-ui, sans-serif" font-size="30" font-weight="800" letter-spacing="-0.04em">Astral</text>
+  <text x="182" y="42" fill="#FBBF24" font-family="Outfit, Noto Sans SC, system-ui, sans-serif" font-size="26" font-weight="700" letter-spacing="-0.02em">Game</text>
+  <text x="78" y="60" fill="#84948C" font-family="Outfit, Noto Sans SC, system-ui, sans-serif" font-size="10" font-weight="700" letter-spacing="0.22em">MULTIPLAYER</text>
+</svg>

@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import { products } from '../site';
+
+const p = products.game;
+---
+
+<Base
+  title={`${p.name} · ${p.label}`}
+  description="Astral Game：建房、进房、低门槛游戏联机。"
+  currentPath="/game/"
+>
+  <section class="product-hero">
+    <div class="shell">
+      <div class="section-head">
+        <p class="section-kicker amber">{p.label}</p>
+        <picture>
+          <source srcset={p.logoDark} media="(prefers-color-scheme: dark)" />
+          <img class="product-logo" src={p.logo} alt={`${p.name} logo`} width="300" height="72" data-logo-light={p.logo} data-logo-dark={p.logoDark} />
+        </picture>
+        <p class="section-lead">
+          给想尽快开一局的人：创建房间、分享房间、加入房间。少碰配置，多花时间在游戏里。
+        </p>
+        <div class="btn-row" style="margin-top: 0.5rem;">
+          <a class="btn btn-amber" href={p.releases} target="_blank" rel="noopener noreferrer">{p.downloadLabel}</a>
+          <a class="btn btn-ghost" href="/download/#game">查看全部下载</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="shell">
+      <ul class="feature-list amber reveal">
+        <li>
+          <strong>房间优先</strong>
+          建房、分享码、进房——联机路径围绕「房间」设计，而不是绕一大圈配置文件。
+        </li>
+        <li>
+          <strong>低门槛开黑</strong>
+          面向 Minecraft、联机生存等常见场景，文档站有分游戏教程可查。
+        </li>
+        <li>
+          <strong>状态一目了然</strong>
+          连接、成员、延迟等关键信息放在主界面，方便喊队友。
+        </li>
+        <li>
+          <strong>与通用版同源内核</strong>
+          同一套 Astral 组网能力，换了一套更适合游戏玩家的交互。
+        </li>
+      </ul>
+      <p class="note reveal">
+        适合：和朋友联机、不想深挖 TOML 的用户。若你需要多实例与完整配置权，请看
+        <a href={products.general.path}>通用版</a>。教程仍可参考
+        <a href="https://astral.fan/" target="_blank" rel="noopener noreferrer">astral.fan</a>。
+      </p>
+    </div>
+  </section>
+</Base>
