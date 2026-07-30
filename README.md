@@ -1,6 +1,6 @@
-# Astral Next 产品门户
+# Astral
 
-下一代 Astral 官方门户：**一套站、两种用户**（通用版 / 游戏版）。暂不含完整文档——教程继续使用 [astral.fan](https://astral.fan/)。
+一套站、两种用法（通用版 / 游戏版）。暂不含完整文档——教程继续使用 [astral.fan](https://astral.fan/)。
 
 - 站点域名（规划）：[https://next.astral.fan](https://next.astral.fan)
 - 本地仓库：`next.astral.github.io`
