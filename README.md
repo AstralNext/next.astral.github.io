@@ -32,46 +32,10 @@ npm run preview  # 预览生产构建
 
 ## 部署
 
-1. 将本仓库推送到 GitHub（例如 `AstralNext/next.astral.github.io` 或组织自定义名）。
-2. 开启 **GitHub Pages**：Source 选 GitHub Actions，或把 `dist/` 发到 `gh-pages` 分支。
-3. 自定义域名：在仓库 Pages 设置中填 `next.astral.fan`，并在 DNS 添加 CNAME 指向 GitHub Pages。
+1. 推送到 GitHub 后，仓库 **Settings → Pages → Build and deployment → Source** 选 **GitHub Actions**（不要选 Deploy from a branch，否则会走 Jekyll）。
+2. 推送 `master`/`main` 会触发 `.github/workflows/deploy.yml`：`npm run build` → 发布 `dist/`。
+3. 自定义域名：Pages 设置中填 `next.astral.fan`，DNS 加 CNAME 指向 GitHub Pages。
 4. `astro.config.mjs` 中已设置 `site: 'https://next.astral.fan'`。
-
-示例 GitHub Actions（可选，自行添加 `.github/workflows/deploy.yml`）：
-
-```yaml
-name: Deploy
-on:
-  push:
-    branches: [main]
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
-```
 
 ## 相关链接
 
