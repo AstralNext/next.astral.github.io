@@ -7,7 +7,7 @@ const p = products.general;
 
 <Base
   title={`${p.name} · ${p.label}`}
-  description="Astral 通用版：EasyTier 多实例管理、AstralCore 服务保活、配置与备份。"
+  description="Astral 通用版：配置可控的通用组网。"
   currentPath="/astral/"
 >
   <section class="product-hero">
@@ -18,12 +18,10 @@ const p = products.general;
           <source srcset={p.logoDark} media="(prefers-color-scheme: dark)" />
           <img class="product-logo" src={p.logo} alt={`${p.name} logo`} width="280" height="72" data-logo-light={p.logo} data-logo-dark={p.logoDark} />
         </picture>
-        <p class="section-lead">
-          给需要精细控制网络拓扑的人：多配置、多实例、桌面核心服务保活。你写 TOML，Astral 负责跑起来。
-        </p>
+        <p class="section-lead">多配置、多实例，组网参数自己说了算。</p>
         <div class="btn-row" style="margin-top: 0.5rem;">
           <a class="btn btn-teal" href={p.releases} target="_blank" rel="noopener noreferrer">{p.downloadLabel}</a>
-          <a class="btn btn-ghost" href="/download/#general">查看全部下载</a>
+          <a class="btn btn-ghost" href="/download/#general">全部下载</a>
         </div>
       </div>
     </div>
@@ -32,26 +30,12 @@ const p = products.general;
   <section class="section" style="padding-top: 0;">
     <div class="shell">
       <ul class="feature-list teal reveal">
-        <li>
-          <strong>多实例并行</strong>
-          同一台机器管理多份网络配置，按需启停，互不干扰。
-        </li>
-        <li>
-          <strong>AstralCore 保活</strong>
-          桌面端以本机服务承载内核，关窗后实例仍可继续运行。
-        </li>
-        <li>
-          <strong>配置即真相</strong>
-          以 TOML / EasyTier 标志位为准，支持编辑、备份与恢复。
-        </li>
-        <li>
-          <strong>仪表盘一眼状态</strong>
-          流量、质量、节点与核心状态，方便排查而不是猜。
-        </li>
+        <li><strong>多实例</strong> 一台机器并行多份网络。</li>
+        <li><strong>配置可控</strong> TOML / EasyTier 标志位直接编辑。</li>
+        <li><strong>状态可见</strong> 节点、流量与连接质量一目了然。</li>
       </ul>
       <p class="note reveal">
-        适合：自建组网、多环境切换、需要保留完整配置控制权的用户。若你只想和朋友开黑，请看
-        <a href={products.game.path}>游戏版</a>。
+        只想开黑联机？请用 <a href={products.game.path}>游戏版</a>。
       </p>
     </div>
   </section>

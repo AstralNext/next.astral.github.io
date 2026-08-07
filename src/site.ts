@@ -1,11 +1,12 @@
 /** Site-wide links and product metadata. Change here when repos move. */
 export const site = {
   name: 'Astral',
-  tagline: '一套内核，两种用法',
+  tagline: '通用组网与游戏联机',
   url: 'https://next.astral.fan',
   docsLegacy: 'https://astral.fan/',
   aml: 'https://aml.astral.fan/',
   githubOrg: 'https://github.com/AstralNext',
+  easytier: 'https://easytier.cn/',
 } as const;
 
 export const products = {
@@ -14,8 +15,8 @@ export const products = {
     name: 'Astral',
     label: '通用版',
     path: '/astral/',
-    blurb: '面向配置与多实例的 EasyTier 管理客户端',
-    ctaHome: '我要通用组网',
+    blurb: '配置可控的通用组网',
+    ctaHome: '通用组网',
     downloadLabel: '下载通用版',
     releases: 'https://github.com/AstralNext/Astral/releases',
     repo: 'https://github.com/AstralNext/Astral',
@@ -29,11 +30,11 @@ export const products = {
     name: 'Astral Game',
     label: '游戏版',
     path: '/game/',
-    blurb: '面向房间联机的轻量客户端',
-    ctaHome: '我要游戏联机',
+    blurb: '开箱即用的游戏联机',
+    ctaHome: '游戏联机',
     downloadLabel: '下载游戏版',
-    releases: 'https://github.com/ldoubil/astral/releases',
-    repo: 'https://github.com/ldoubil/astral',
+    releases: 'https://github.com/AstralNext/AstralGame/releases',
+    repo: 'https://github.com/AstralNext/AstralGame',
     accent: 'amber',
     logo: '/logos/astral-game.svg',
     logoDark: '/logos/astral-game-dark.svg',
