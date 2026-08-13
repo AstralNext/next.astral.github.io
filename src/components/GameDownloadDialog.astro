@@ -1,0 +1,184 @@
+---
+import { products } from '../site';
+
+const game = products.game;
+---
+
+<dialog class="dl-dialog" data-game-dl-dialog aria-labelledby="dl-dialog-title">
+  <div class="dl-card">
+    <button type="button" class="dl-close" data-dl-close aria-label="关闭">×</button>
+    <p class="section-kicker amber">{game.label}</p>
+    <h2 id="dl-dialog-title">下载游戏版</h2>
+    <p class="dl-ver" data-dl-ver>正在获取最新版本…</p>
+
+    <div class="dl-tabs" role="tablist">
+      <button type="button" class="dl-tab is-on" data-dl-tab="github" role="tab" aria-selected="true">
+        GitHub
+      </button>
+      <button type="button" class="dl-tab" data-dl-tab="quark" role="tab" aria-selected="false">
+        夸克网盘
+      </button>
+    </div>
+
+    <div class="dl-pane" data-dl-pane="github" role="tabpanel">
+      <p class="dl-hint">自动读取 GitHub Release 最新包。</p>
+      <div class="dl-list" data-dl-github>加载中…</div>
+    </div>
+
+    <div class="dl-pane" data-dl-pane="quark" role="tabpanel" hidden>
+      <p class="dl-hint">国内直链，适合 GitHub 较慢时。</p>
+      <div class="dl-list" data-dl-quark>加载中…</div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  import { products } from '../site';
+
+  const game = products.game;
+  const dialog = document.querySelector<HTMLDialogElement>('[data-game-dl-dialog]');
+  if (dialog && !(dialog as HTMLDialogElement & { __bound?: boolean }).__bound) {
+    (dialog as HTMLDialogElement & { __bound?: boolean }).__bound = true;
+
+    const verEl = dialog.querySelector('[data-dl-ver]');
+    const ghList = dialog.querySelector('[data-dl-github]');
+    const qkList = dialog.querySelector('[data-dl-quark]');
+    let loaded = false;
+
+    const assetLabel = (name: string) => {
+      const n = name.toLowerCase();
+      if (n.includes('android') && n.endsWith('.apk')) return 'Android';
+      if (n.includes('windows') && n.includes('setup') && n.endsWith('.exe')) {
+        return 'Windows 安装包';
+      }
+      if (n.includes('windows') && n.endsWith('.zip')) return 'Windows 便携版';
+      if (n.includes('linux')) return 'Linux';
+      return name;
+    };
+
+    const assetRank = (name: string) => {
+      const n = name.toLowerCase();
+      if (n.includes('setup') && n.endsWith('.exe')) return 0;
+      if (n.includes('windows') && n.endsWith('.zip')) return 1;
+      if (n.endsWith('.apk')) return 2;
+      if (n.includes('linux')) return 3;
+      return 9;
+    };
+
+    const setTab = (id: 'github' | 'quark') => {
+      dialog.querySelectorAll('[data-dl-tab]').forEach((btn) => {
+        const on = btn.getAttribute('data-dl-tab') === id;
+        btn.classList.toggle('is-on', on);
+        btn.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      dialog.querySelectorAll('[data-dl-pane]').forEach((pane) => {
+        const el = pane as HTMLElement;
+        el.hidden = el.getAttribute('data-dl-pane') !== id;
+      });
+    };
+
+    const loadGithub = async () => {
+      if (!ghList) return;
+      try {
+        const res = await fetch(game.releasesApi);
+        if (!res.ok) throw new Error('github');
+        const data = (await res.json()) as {
+          tag_name?: string;
+          published_at?: string;
+          html_url?: string;
+          assets?: { name: string; browser_download_url: string; size?: number }[];
+        };
+        const tag = data.tag_name || 'latest';
+        if (verEl) {
+          const date = data.published_at
+            ? new Date(data.published_at).toLocaleDateString('zh-CN')
+            : '';
+          verEl.textContent = date ? `${tag} · ${date}` : tag;
+        }
+        const assets = [...(data.assets ?? [])]
+          .filter((a) => a?.name && a.browser_download_url)
+          .sort((a, b) => assetRank(a.name) - assetRank(b.name));
+        if (!assets.length) {
+          ghList.innerHTML = `<a class="btn btn-amber" href="${data.html_url || game.releases}" target="_blank" rel="noopener noreferrer">打开 GitHub Release</a>`;
+          return;
+        }
+        ghList.innerHTML = assets
+          .map((a) => {
+            const direct = a.browser_download_url;
+            const fast = `${game.githubProxy}${direct}`;
+            return `<div class="dl-item">
+              <div>
+                <strong>${assetLabel(a.name)}</strong>
+                <span>${a.name}</span>
+              </div>
+              <div class="dl-item-actions">
+                <a class="btn btn-amber" href="${direct}" rel="noopener noreferrer">下载</a>
+                <a class="btn btn-ghost" href="${fast}" rel="noopener noreferrer">加速</a>
+              </div>
+            </div>`;
+          })
+          .join('');
+      } catch {
+        if (verEl) verEl.textContent = 'GitHub 暂时不可用';
+        ghList.innerHTML = `<a class="btn btn-amber" href="${game.releases}" target="_blank" rel="noopener noreferrer">打开 GitHub Release</a>`;
+      }
+    };
+
+    type QuarkRelease = { version?: string; date?: string; url?: string };
+
+    const loadQuark = async () => {
+      if (!qkList) return;
+      try {
+        const res = await fetch(game.downloadsJson, { cache: 'no-store' });
+        if (!res.ok) throw new Error('json');
+        const list = (await res.json()) as QuarkRelease[];
+        const latest = [...(list ?? [])].find((x) => (x.url || '').trim());
+        if (!latest) throw new Error('empty');
+        const ver = latest.version || '最新';
+        const date = latest.date ? ` · ${latest.date}` : '';
+        if (verEl && !verEl.textContent?.startsWith('v') && !verEl.textContent?.includes('·')) {
+          verEl.textContent = `${ver}${date}`;
+        }
+        qkList.innerHTML = `<div class="dl-item">
+          <div>
+            <strong>夸克网盘 ${ver}</strong>
+            <span>打开分享页，选择对应平台安装包</span>
+          </div>
+          <div class="dl-item-actions">
+            <a class="btn btn-amber" href="${latest.url}" target="_blank" rel="noopener noreferrer">打开网盘</a>
+          </div>
+        </div>`;
+      } catch {
+        qkList.innerHTML = `<p class="dl-empty">网盘链接暂未就绪，请先用 GitHub 下载。</p>`;
+      }
+    };
+
+    const openDialog = () => {
+      dialog.showModal();
+      if (!loaded) {
+        loaded = true;
+        void loadGithub();
+        void loadQuark();
+      }
+    };
+
+    document.querySelectorAll('[data-open-game-download]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openDialog();
+      });
+    });
+
+    dialog.querySelectorAll('[data-dl-tab]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-dl-tab');
+        if (id === 'github' || id === 'quark') setTab(id);
+      });
+    });
+
+    dialog.querySelector('[data-dl-close]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+  }
+</script>

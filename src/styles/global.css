@@ -287,6 +287,12 @@ html[data-theme='dark'] .theme-toggle .icon-moon {
 }
 
 /* —— Buttons —— */
+button.btn {
+  cursor: pointer;
+  appearance: none;
+  font: inherit;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -861,6 +867,126 @@ html[data-theme='dark'] .fx-dust {
   margin-top: 1.5rem;
   font-size: 0.9rem;
   color: var(--muted);
+}
+
+.dl-dialog {
+  padding: 0;
+  border: none;
+  background: transparent;
+  max-width: calc(100vw - 1.5rem);
+}
+
+.dl-dialog::backdrop {
+  background: color-mix(in srgb, #070b09 55%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.dl-card {
+  width: min(34rem, 100vw - 1.5rem);
+  padding: 1.4rem 1.35rem 1.25rem;
+  border-radius: calc(var(--radius) + 0.2rem);
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  color: var(--ink);
+  position: relative;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.dl-card h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.dl-close {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.75rem;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  color: var(--ink);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.dl-ver {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.dl-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  padding: 0.3rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+}
+
+.dl-tab {
+  border: none;
+  border-radius: 999px;
+  min-height: 2.4rem;
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--font-display);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dl-tab.is-on {
+  background: var(--amber);
+  color: #fffaf0;
+}
+
+.dl-hint,
+.dl-empty {
+  margin: 0 0 0.7rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.dl-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.dl-item {
+  display: grid;
+  gap: 0.65rem;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+}
+
+.dl-item strong {
+  display: block;
+}
+
+.dl-item span {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  word-break: break-all;
+}
+
+.dl-item-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.dl-item-actions .btn {
+  min-height: 2.4rem;
+  padding: 0.45rem 0.95rem;
+  font-size: 0.9rem;
 }
 
 /* —— Home below-fold —— */

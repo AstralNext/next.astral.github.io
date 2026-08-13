@@ -34,9 +34,9 @@ import { products } from '../site';
           <img class="product-logo product-logo-sm" src={products.game.logo} alt="" width="260" height="62" data-logo-light={products.game.logo} data-logo-dark={products.game.logoDark} />
           <p>{products.game.blurb}</p>
           <div class="btn-row">
-            <a class="btn btn-amber" href={products.game.releases} target="_blank" rel="noopener noreferrer">
+            <button type="button" class="btn btn-amber" data-open-game-download>
               {products.game.downloadLabel}
-            </a>
+            </button>
             <a class="btn btn-ghost" href={products.game.repo} target="_blank" rel="noopener noreferrer">仓库</a>
           </div>
         </article>

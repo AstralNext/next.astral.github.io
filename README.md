@@ -17,6 +17,8 @@
 
 下载与仓库 URL 集中在 [`src/site.ts`](src/site.ts)。
 
+游戏版「下载」会弹出 GitHub / 夸克网盘。GitHub 走 Release API 自动取最新包；夸克链接写在 [`public/downloads.json`](public/downloads.json)（数组第一项且带 `url` 的为最新）。
+
 ## 开发
 
 ```bash
