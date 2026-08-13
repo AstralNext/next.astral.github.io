@@ -7,7 +7,7 @@ const p = products.game;
 
 <Base
   title={`${p.name} · ${p.label}`}
-  description="Astral Game：建房、短码进房，开黑联机。"
+  description="Astral Game：建房发短码，进房开黑。"
   currentPath="/game/"
 >
   <section class="product-hero">
@@ -18,7 +18,7 @@ const p = products.game;
           <source srcset={p.logoDark} media="(prefers-color-scheme: dark)" />
           <img class="product-logo" src={p.logo} alt={`${p.name} logo`} width="300" height="72" data-logo-light={p.logo} data-logo-dark={p.logoDark} />
         </picture>
-        <p class="section-lead">建房、短码进房，开黑联机。</p>
+        <p class="section-lead">建房发短码，进房开黑。</p>
         <div class="btn-row" style="margin-top: 0.5rem;">
           <button type="button" class="btn btn-amber" data-open-game-download>{p.downloadLabel}</button>
           <a class="btn btn-ghost" href="/download/#game">全部下载</a>
@@ -30,7 +30,7 @@ const p = products.game;
   <section class="section" style="padding-top: 0;">
     <div class="shell">
       <p class="note reveal">
-        要自己改配置？请用 <a href={products.general.path}>通用版</a>。
+        需要自己组网？请用 <a href={products.general.path}>通用版</a>。
       </p>
     </div>
   </section>
