@@ -901,14 +901,7 @@ html[data-theme='dark'] .fx-dust {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  object-position: top;
   background: var(--bg-deep);
-}
-
-.shot-img-phone {
-  aspect-ratio: 9 / 19.5;
 }
 
 .shot-ph {
@@ -1017,8 +1010,8 @@ html[data-theme='dark'] .fx-dust {
 }
 
 @media (max-width: 859px) {
-  .shot-phone {
-    display: none;
+  .shot-frame-phone {
+    max-width: 14rem;
   }
 }
 
