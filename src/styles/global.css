@@ -869,7 +869,13 @@ html[data-theme='dark'] .fx-dust {
   color: var(--muted);
 }
 
-.dl-dialog {
+.dl-dialog:not([open]) {
+  display: none;
+}
+
+.dl-dialog[open] {
+  display: grid;
+  place-items: center;
   padding: 0;
   border: none;
   background: transparent;
