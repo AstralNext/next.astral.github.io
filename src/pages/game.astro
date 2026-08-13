@@ -7,7 +7,7 @@ const p = products.game;
 
 <Base
   title={`${p.name} · ${p.label}`}
-  description="Astral Game：开箱即用的游戏联机。"
+  description="Astral Game：建房、短码或邀请链接进房，游戏联机客户端。"
   currentPath="/game/"
 >
   <section class="product-hero">
@@ -18,7 +18,7 @@ const p = products.game;
           <source srcset={p.logoDark} media="(prefers-color-scheme: dark)" />
           <img class="product-logo" src={p.logo} alt={`${p.name} logo`} width="300" height="72" data-logo-light={p.logo} data-logo-dark={p.logoDark} />
         </picture>
-        <p class="section-lead">建房、分享、进房，少碰配置文件。</p>
+        <p class="section-lead">Astral 游戏客户端。建房、分享短码或邀请链接，进房开黑。</p>
         <div class="btn-row" style="margin-top: 0.5rem;">
           <button type="button" class="btn btn-amber" data-open-game-download>{p.downloadLabel}</button>
           <a class="btn btn-ghost" href="/download/#game">全部下载</a>
@@ -30,12 +30,13 @@ const p = products.game;
   <section class="section" style="padding-top: 0;">
     <div class="shell">
       <ul class="feature-list amber reveal">
-        <li><strong>房间优先</strong> 建房 / 分享码 / 进房一条路径。</li>
-        <li><strong>开箱联机</strong> 面向常见游戏联机场景。</li>
-        <li><strong>状态清楚</strong> 成员与连接状态放在主界面。</li>
+        <li><strong>三栏主界面</strong> 联机 / 服务器 / 设置。</li>
+        <li><strong>房间</strong> 创建或加入；9 位短码，或 next.astral.fan/j / astralgame:// 邀请链接。</li>
+        <li><strong>房间里</strong> 成员、延迟、流量累计、开放游戏。</li>
+        <li><strong>Windows</strong> 局域网发现与组播 / 本机转发；Linux、Android 进房即可。</li>
       </ul>
       <p class="note reveal">
-        需要精细组网配置？请用 <a href={products.general.path}>通用版</a>。
+        需要多实例或自己改 TOML？请用 <a href={products.general.path}>通用版</a>。游戏版没有配置编辑器。
       </p>
     </div>
   </section>

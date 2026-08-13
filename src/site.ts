@@ -1,7 +1,7 @@
 /** Site-wide links and product metadata. Change here when repos move. */
 export const site = {
   name: 'Astral',
-  tagline: '通用组网与游戏联机',
+  tagline: '虚拟网络管理与游戏联机',
   url: 'https://next.astral.fan',
   docsLegacy: 'https://astral.fan/',
   aml: 'https://aml.astral.fan/',
@@ -15,8 +15,8 @@ export const products = {
     name: 'Astral',
     label: '通用版',
     path: '/astral/',
-    blurb: '配置可控的通用组网',
-    ctaHome: '通用组网',
+    blurb: 'EasyTier 多实例，自己改配置',
+    ctaHome: '虚拟网络',
     downloadLabel: '下载通用版',
     releases: 'https://github.com/AstralNext/Astral/releases',
     releasesApi: 'https://api.github.com/repos/AstralNext/Astral/releases/latest',
@@ -33,7 +33,7 @@ export const products = {
     name: 'Astral Game',
     label: '游戏版',
     path: '/game/',
-    blurb: '开箱即用的游戏联机',
+    blurb: '建房、短码、邀请链接进房',
     ctaHome: '游戏联机',
     downloadLabel: '下载游戏版',
     releases: 'https://github.com/AstralNext/AstralGame/releases',

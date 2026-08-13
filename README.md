@@ -1,6 +1,6 @@
 # Astral
 
-通用组网与游戏联机。暂不含完整文档——教程继续使用 [astral.fan](https://astral.fan/)。
+虚拟网络管理与游戏联机。暂不含完整文档——教程继续使用 [astral.fan](https://astral.fan/)。
 
 - 站点：[https://next.astral.fan](https://next.astral.fan)
 - 本地仓库：`next.astral.github.io`
