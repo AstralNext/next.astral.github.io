@@ -22,9 +22,9 @@ import { products } from '../site';
           <img class="product-logo product-logo-sm" src={products.general.logo} alt="" width="240" height="62" data-logo-light={products.general.logo} data-logo-dark={products.general.logoDark} />
           <p>{products.general.blurb}</p>
           <div class="btn-row">
-            <a class="btn btn-teal" href={products.general.releases} target="_blank" rel="noopener noreferrer">
+            <button type="button" class="btn btn-teal" data-open-astral-download>
               {products.general.downloadLabel}
-            </a>
+            </button>
             <a class="btn btn-ghost" href={products.general.repo} target="_blank" rel="noopener noreferrer">仓库</a>
           </div>
         </article>

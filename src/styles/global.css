@@ -950,6 +950,11 @@ html[data-theme='dark'] .fx-dust {
   color: #fffaf0;
 }
 
+.dl-dialog[data-accent='teal'] .dl-tab.is-on {
+  background: var(--teal);
+  color: #f4fffd;
+}
+
 .dl-hint,
 .dl-empty {
   margin: 0 0 0.7rem;

@@ -1,6 +1,6 @@
 ---
 import { site } from '../site';
-import GameDownloadDialog from '../components/GameDownloadDialog.astro';
+import AppDownloadDialogs from '../components/AppDownloadDialogs.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -131,7 +131,7 @@ const pageTitle = title === 'Astral' ? 'Astral · Next' : `${title} · Astral`;
     </footer>
     </div>
 
-    <GameDownloadDialog />
+    <AppDownloadDialogs />
 
     <script>
       const key = 'astral-theme';
