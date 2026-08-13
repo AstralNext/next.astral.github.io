@@ -1,0 +1,67 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+
+interface Props {
+  stem: string;
+  alt: string;
+  accent?: 'teal' | 'amber';
+}
+
+const { stem, alt, accent = 'teal' } = Astro.props;
+const shotsDir = path.join(process.cwd(), 'public', 'shots');
+const exts = ['.webp', '.png', '.jpg', '.jpeg'] as const;
+
+function resolveShot(name: string) {
+  for (const ext of exts) {
+    if (fs.existsSync(path.join(shotsDir, `${name}${ext}`))) {
+      return `/shots/${name}${ext}`;
+    }
+  }
+  return null;
+}
+
+const desktop = resolveShot(stem);
+const phone = resolveShot(`${stem}-phone`);
+---
+
+<div class={`product-shots reveal ${accent}`}>
+  <figure class="shot shot-desktop">
+    <div class="shot-frame">
+      <div class="shot-chrome" aria-hidden="true"><i></i><i></i><i></i></div>
+      {desktop ? (
+        <img class="shot-img" src={desktop} alt={alt} width="1440" height="900" />
+      ) : (
+        <div class="shot-ph" role="img" aria-label={`${alt}（占位）`}>
+          <div class="shot-skel" aria-hidden="true">
+            <div class="shot-skel-side"></div>
+            <div class="shot-skel-main">
+              <span class="shot-skel-bar"></span>
+              <span class="shot-skel-bar short"></span>
+              <div class="shot-skel-cards"><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <span class="shot-ph-label">软件截图</span>
+        </div>
+      )}
+    </div>
+  </figure>
+
+  <figure class="shot shot-phone">
+    <div class="shot-frame shot-frame-phone">
+      {phone ? (
+        <img class="shot-img shot-img-phone" src={phone} alt={`${alt} · 手机`} width="390" height="844" />
+      ) : (
+        <div class="shot-ph shot-ph-phone" role="img" aria-label={`${alt} 手机界面（占位）`}>
+          <div class="shot-skel shot-skel-phone" aria-hidden="true">
+            <span class="shot-skel-bar"></span>
+            <span class="shot-skel-bar short"></span>
+            <div class="shot-skel-cards phone"><i></i><i></i></div>
+            <span class="shot-skel-dock"></span>
+          </div>
+          <span class="shot-ph-label">软件截图</span>
+        </div>
+      )}
+    </div>
+  </figure>
+</div>

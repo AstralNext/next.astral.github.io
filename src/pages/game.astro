@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import ProductShot from '../components/ProductShot.astro';
 import { products } from '../site';
 
 const p = products.game;
@@ -24,6 +25,7 @@ const p = products.game;
           <a class="btn btn-ghost" href="/download/#game">全部下载</a>
         </div>
       </div>
+      <ProductShot stem="game" alt={`${p.name} 界面`} accent="amber" />
     </div>
   </section>
 

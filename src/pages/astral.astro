@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import ProductShot from '../components/ProductShot.astro';
 import { products } from '../site';
 
 const p = products.general;
@@ -24,6 +25,7 @@ const p = products.general;
           <a class="btn btn-ghost" href="/download/#general">全部下载</a>
         </div>
       </div>
+      <ProductShot stem="astral" alt={`${p.name} 界面`} accent="teal" />
     </div>
   </section>
 
