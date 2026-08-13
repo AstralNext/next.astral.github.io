@@ -158,6 +158,10 @@ p {
   margin-inline: auto;
 }
 
+.shell.wide {
+  width: min(100% - 2rem, 78rem);
+}
+
 /* —— Nav —— */
 .site-header {
   position: sticky;
@@ -630,6 +634,132 @@ html[data-theme='dark'] .fx-dust {
 .hero-actions {
   opacity: 0;
   animation: rise 0.9s var(--ease) 0.34s forwards;
+}
+
+.hero-home {
+  gap: 2.4rem;
+}
+
+.hero-copy {
+  display: grid;
+  gap: 1.35rem;
+  align-content: center;
+}
+
+.hero-copy .path-grid {
+  max-width: none;
+}
+
+.hero-stage {
+  position: relative;
+  min-height: 18rem;
+  margin-top: 0.4rem;
+  opacity: 0;
+  animation: rise 1s var(--ease) 0.46s forwards;
+}
+
+.stage-desk,
+.stage-phone {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.stage-desk {
+  border-radius: calc(var(--radius) + 0.15rem);
+  box-shadow:
+    0 22px 50px color-mix(in srgb, var(--ink) 12%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--teal) 10%, transparent);
+}
+
+.stage-desk.front {
+  position: relative;
+  z-index: 2;
+  width: 86%;
+  transform: rotate(-2.4deg);
+  transform-origin: left center;
+}
+
+.hero-stage .shot-chrome i:nth-child(1) {
+  background: color-mix(in srgb, var(--teal) 80%, transparent);
+}
+
+.hero-stage .shot-chrome i:nth-child(2) {
+  background: color-mix(in srgb, var(--teal) 45%, transparent);
+}
+
+.hero-stage .shot-chrome i:nth-child(3) {
+  background: color-mix(in srgb, var(--teal) 22%, transparent);
+}
+
+.stage-desk.back {
+  position: absolute;
+  z-index: 1;
+  width: 62%;
+  right: -2%;
+  top: 10%;
+  transform: rotate(7deg);
+  box-shadow:
+    0 16px 36px color-mix(in srgb, var(--ink) 10%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--amber) 16%, transparent);
+  opacity: 0.94;
+}
+
+.stage-desk img,
+.stage-phone img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.stage-phone {
+  position: absolute;
+  z-index: 3;
+  width: min(28%, 9.2rem);
+  right: 7%;
+  bottom: -6%;
+  border-radius: 1.25rem;
+  box-shadow:
+    0 18px 40px color-mix(in srgb, var(--ink) 16%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--teal) 18%, transparent);
+  transform: rotate(5deg);
+}
+
+@media (min-width: 980px) {
+  .hero-home {
+    grid-template-columns: minmax(18rem, 0.9fr) minmax(22rem, 1.15fr);
+    align-items: center;
+    gap: 2.8rem 1.5rem;
+  }
+
+  .hero-stage {
+    min-height: 22rem;
+    margin-top: 0;
+  }
+
+  .hero:has(.hero-home) {
+    min-height: calc(100svh - var(--nav-h));
+    padding-top: 2.5rem;
+    padding-bottom: 3.5rem;
+  }
+}
+
+@media (max-width: 979px) {
+  .stage-desk.back {
+    display: none;
+  }
+
+  .stage-desk.front {
+    width: 92%;
+    transform: rotate(-1.4deg);
+  }
+
+  .stage-phone {
+    width: min(30%, 8.4rem);
+    right: 4%;
+    bottom: -8%;
+  }
 }
 
 .path-grid {
@@ -1196,86 +1326,117 @@ html[data-theme='dark'] .fx-dust {
 }
 
 /* —— Home below-fold —— */
-.home-choose {
-  padding-top: 2.5rem;
+.home-pick {
+  padding-top: 3.25rem;
 }
 
-.choose-grid {
+.pick-grid {
   display: grid;
-  gap: 1.25rem;
+  gap: 1.15rem;
 }
 
 @media (min-width: 800px) {
-  .choose-grid {
+  .pick-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 1.35rem;
   }
 }
 
-.choose-col {
+.pick-card {
   display: grid;
-  gap: 0.85rem;
-  align-content: start;
-  padding: 0.25rem 0 0.25rem 1.15rem;
-  border-left: 3px solid var(--line);
+  text-decoration: none;
+  color: inherit;
+  border-radius: calc(var(--radius) + 0.2rem);
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  overflow: hidden;
+  transition:
+    transform 0.4s var(--ease),
+    border-color 0.25s ease,
+    box-shadow 0.4s var(--ease);
 }
 
-.choose-col.teal {
-  border-left-color: color-mix(in srgb, var(--teal) 55%, transparent);
+.pick-card:hover {
+  transform: translateY(-5px);
+  text-decoration: none;
+  color: var(--ink);
 }
 
-.choose-col.amber {
-  border-left-color: color-mix(in srgb, var(--amber) 55%, transparent);
+.pick-card.teal:hover {
+  border-color: color-mix(in srgb, var(--teal) 40%, transparent);
+  box-shadow: 0 18px 42px color-mix(in srgb, var(--teal) 16%, transparent);
 }
 
-.choose-label {
-  margin: 0;
-  font-size: 0.75rem;
+.pick-card.amber:hover {
+  border-color: color-mix(in srgb, var(--amber) 40%, transparent);
+  box-shadow: 0 18px 42px color-mix(in srgb, var(--amber) 16%, transparent);
+}
+
+.pick-visual {
+  position: relative;
+  padding: 1rem 1rem 0;
+  min-height: 10.5rem;
+}
+
+.pick-card.teal .pick-visual {
+  background:
+    radial-gradient(90% 80% at 20% 0%, color-mix(in srgb, var(--teal-soft) 80%, transparent), transparent 70%),
+    color-mix(in srgb, var(--bg-deep) 55%, var(--surface));
+}
+
+.pick-card.amber .pick-visual {
+  background:
+    radial-gradient(90% 80% at 20% 0%, color-mix(in srgb, var(--amber-soft) 80%, transparent), transparent 70%),
+    color-mix(in srgb, var(--bg-deep) 55%, var(--surface));
+}
+
+.pick-desk {
+  width: 100%;
+  border-radius: 0.7rem 0.7rem 0 0;
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--ink) 10%, transparent);
+}
+
+.pick-phone {
+  position: absolute;
+  width: 26%;
+  right: 0.85rem;
+  bottom: -1.15rem;
+  border-radius: 0.75rem;
+  border: 2px solid color-mix(in srgb, var(--surface) 90%, transparent);
+  box-shadow: 0 12px 24px color-mix(in srgb, var(--ink) 16%, transparent);
+  background: var(--surface);
+}
+
+.pick-body {
+  display: grid;
+  gap: 0.2rem;
+  padding: 1.7rem 1.15rem 1.15rem;
+}
+
+.pick-kicker {
+  font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
-.choose-col.teal .choose-label {
+.pick-card.teal .pick-kicker {
   color: var(--teal);
 }
 
-.choose-col.amber .choose-label {
+.pick-card.amber .pick-kicker {
   color: var(--amber-deep);
 }
 
-.choose-title {
-  margin: 0;
+.pick-title {
   font-family: var(--font-display);
-  font-size: 1.35rem;
+  font-size: 1.28rem;
   font-weight: 800;
-  letter-spacing: -0.02em;
 }
 
-.choose-points {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.45rem;
-  color: var(--ink-soft);
-  font-size: 0.98rem;
-}
-
-.choose-points li {
-  padding-left: 0.9rem;
-  position: relative;
-}
-
-.choose-points li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 0.35rem;
-  height: 0.35rem;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--ink) 28%, transparent);
+.pick-desc {
+  color: var(--muted);
+  font-size: 0.92rem;
 }
 
 .text-link {
@@ -1286,16 +1447,6 @@ html[data-theme='dark'] .fx-dust {
   color: var(--ink);
   border-bottom: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
   transition: color 0.2s ease, border-color 0.2s ease;
-}
-
-.choose-col.teal .text-link:hover {
-  color: var(--teal);
-  border-bottom-color: color-mix(in srgb, var(--teal) 55%, transparent);
-}
-
-.choose-col.amber .text-link:hover {
-  color: var(--amber-deep);
-  border-bottom-color: color-mix(in srgb, var(--amber) 55%, transparent);
 }
 
 .home-core {
@@ -1613,6 +1764,7 @@ html[data-theme='dark'] .fx-dust {
   .hero-brand-word,
   .hero-lead,
   .hero-actions,
+  .hero-stage,
   .fx-blob,
   .fx-ribbon,
   .fx-mist,
@@ -1633,7 +1785,8 @@ html[data-theme='dark'] .fx-dust {
   }
 
   .btn:hover,
-  .path-link:hover {
+  .path-link:hover,
+  .pick-card:hover {
     transform: none;
   }
 }

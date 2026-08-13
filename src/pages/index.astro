@@ -5,58 +5,79 @@ import { products, site } from '../site';
 
 <Base
   title="Astral"
-  description="Astral：通用组网与游戏联机。"
+  description="Astral：开黑用游戏版，自己组网用通用版。"
   currentPath="/"
 >
   <section class="hero">
-    <div class="shell hero-inner">
-      <h1 class="hero-brand">
-        <span>Next</span>
-        <span class="hero-brand-word">Astral</span>
-      </h1>
-      <p class="hero-lead">{site.tagline}。按你的场景选一个客户端即可。</p>
-      <div class="hero-actions path-grid" role="navigation" aria-label="选择产品">
-        <a class="path-link teal" href={products.general.path}>
-          <img class="path-mark" src={products.general.mark} alt="" width="40" height="40" />
-          <span class="path-kicker">{products.general.label}</span>
-          <span class="path-title">{products.general.ctaHome}</span>
-          <span class="path-desc">{products.general.blurb}</span>
-        </a>
-        <a class="path-link amber" href={products.game.path}>
-          <img class="path-mark" src={products.game.mark} alt="" width="40" height="40" />
-          <span class="path-kicker">{products.game.label}</span>
-          <span class="path-title">{products.game.ctaHome}</span>
-          <span class="path-desc">{products.game.blurb}</span>
-        </a>
+    <div class="shell wide hero-inner hero-home">
+      <div class="hero-copy">
+        <h1 class="hero-brand">
+          <span>Next</span>
+          <span class="hero-brand-word">Astral</span>
+        </h1>
+        <p class="hero-lead">开黑用游戏版，自己组网用通用版。</p>
+        <div class="hero-actions path-grid" role="navigation" aria-label="选择产品">
+          <a class="path-link teal" href={products.general.path}>
+            <img class="path-mark" src={products.general.mark} alt="" width="40" height="40" />
+            <span class="path-kicker">{products.general.label}</span>
+            <span class="path-title">{products.general.ctaHome}</span>
+            <span class="path-desc">{products.general.blurb}</span>
+          </a>
+          <a class="path-link amber" href={products.game.path}>
+            <img class="path-mark" src={products.game.mark} alt="" width="40" height="40" />
+            <span class="path-kicker">{products.game.label}</span>
+            <span class="path-title">{products.game.ctaHome}</span>
+            <span class="path-desc">{products.game.blurb}</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-stage" aria-hidden="true">
+        <figure class="stage-desk back">
+          <img src="/shots/game.webp" alt="" width="924" height="507" />
+        </figure>
+        <figure class="stage-desk front">
+          <div class="shot-chrome"><i></i><i></i><i></i></div>
+          <img src="/shots/astral.webp" alt="" width="924" height="507" />
+        </figure>
+        <figure class="stage-phone">
+          <img src="/shots/astral-phone.webp" alt="" width="471" height="1024" />
+        </figure>
       </div>
     </div>
   </section>
 
-  <section class="section home-choose">
+  <section class="section home-pick">
     <div class="shell">
       <div class="section-head reveal">
-        <p class="section-kicker teal">Choose</p>
-        <h2 class="section-title">怎么选</h2>
-        <p class="section-lead">对照一眼，下对客户端。</p>
+        <p class="section-kicker teal">Pick</p>
+        <h2 class="section-title">先看一眼</h2>
+        <p class="section-lead">两个客户端，各干各的事。</p>
       </div>
 
-      <div class="choose-grid reveal">
-        <article class="choose-col teal">
-          <p class="choose-label">{products.general.label}</p>
-          <h3 class="choose-title">通用组网</h3>
-          <ul class="choose-points">
-            <li>多开实例的组网客户端</li>
-          </ul>
-          <a class="text-link" href={products.general.path}>了解通用版</a>
-        </article>
-        <article class="choose-col amber">
-          <p class="choose-label">{products.game.label}</p>
-          <h3 class="choose-title">游戏联机</h3>
-          <ul class="choose-points">
-            <li>建房发短码，进房开黑</li>
-          </ul>
-          <a class="text-link" href={products.game.path}>了解游戏版</a>
-        </article>
+      <div class="pick-grid reveal">
+        <a class="pick-card teal" href={products.general.path}>
+          <div class="pick-visual">
+            <img class="pick-desk" src="/shots/astral.webp" alt="" width="924" height="507" />
+            <img class="pick-phone" src="/shots/astral-phone.webp" alt="" width="471" height="1024" />
+          </div>
+          <div class="pick-body">
+            <span class="pick-kicker">{products.general.label}</span>
+            <strong class="pick-title">{products.general.ctaHome}</strong>
+            <span class="pick-desc">{products.general.blurb}</span>
+          </div>
+        </a>
+        <a class="pick-card amber" href={products.game.path}>
+          <div class="pick-visual">
+            <img class="pick-desk" src="/shots/game.webp" alt="" width="924" height="507" />
+            <img class="pick-phone" src="/shots/game-phone.webp" alt="" width="409" height="769" />
+          </div>
+          <div class="pick-body">
+            <span class="pick-kicker">{products.game.label}</span>
+            <strong class="pick-title">{products.game.ctaHome}</strong>
+            <span class="pick-desc">{products.game.blurb}</span>
+          </div>
+        </a>
       </div>
     </div>
   </section>

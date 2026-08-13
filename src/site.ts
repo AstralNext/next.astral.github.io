@@ -1,7 +1,7 @@
 /** Site-wide links and product metadata. Change here when repos move. */
 export const site = {
   name: 'Astral',
-  tagline: '通用组网与游戏联机',
+  tagline: '开黑用游戏版，自己组网用通用版',
   url: 'https://next.astral.fan',
   docsLegacy: 'https://astral.fan/',
   aml: 'https://aml.astral.fan/',
