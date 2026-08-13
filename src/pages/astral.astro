@@ -7,7 +7,7 @@ const p = products.general;
 
 <Base
   title={`${p.name} · ${p.label}`}
-  description="Astral：EasyTier 虚拟网络管理客户端。本机多实例，TOML 自己改。"
+  description="Astral 通用版：自己改配置，多实例组网。"
   currentPath="/astral/"
 >
   <section class="product-hero">
@@ -18,7 +18,7 @@ const p = products.general;
           <source srcset={p.logoDark} media="(prefers-color-scheme: dark)" />
           <img class="product-logo" src={p.logo} alt={`${p.name} logo`} width="280" height="72" data-logo-light={p.logo} data-logo-dark={p.logoDark} />
         </picture>
-        <p class="section-lead">虚拟网络管理客户端。本机跑 EasyTier 实例，配置自己改。</p>
+        <p class="section-lead">自己管配置，多实例组网。</p>
         <div class="btn-row" style="margin-top: 0.5rem;">
           <button type="button" class="btn btn-teal" data-open-astral-download>{p.downloadLabel}</button>
           <a class="btn btn-ghost" href="/download/#general">全部下载</a>
@@ -29,14 +29,8 @@ const p = products.general;
 
   <section class="section" style="padding-top: 0;">
     <div class="shell">
-      <ul class="feature-list teal reveal">
-        <li><strong>四栏主界面</strong> 面板 / 实例 / 工具 / 设置。</li>
-        <li><strong>多实例</strong> 桌面可并行多份网络；Android 同时只跑一个。</li>
-        <li><strong>配置与状态</strong> 网络名、密钥、Peer 等直接编辑；流量、节点、连接质量在面板。</li>
-        <li><strong>平台</strong> Windows / Linux / Android。</li>
-      </ul>
       <p class="note reveal">
-        只想建房开黑？请用 <a href={products.game.path}>游戏版</a>。没有房间、短码或邀请链接。
+        只想建房开黑？请用 <a href={products.game.path}>游戏版</a>。
       </p>
     </div>
   </section>
