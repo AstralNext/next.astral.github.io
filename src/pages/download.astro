@@ -17,18 +17,6 @@ import { products } from '../site';
       </div>
 
       <div class="download-grid">
-        <article id="general" class="download-block reveal">
-          <p class="section-kicker teal">{products.general.label}</p>
-          <img class="product-logo product-logo-sm" src={products.general.logo} alt="" width="240" height="62" data-logo-light={products.general.logo} data-logo-dark={products.general.logoDark} />
-          <p>{products.general.blurb}</p>
-          <div class="btn-row">
-            <button type="button" class="btn btn-teal" data-open-astral-download>
-              {products.general.downloadLabel}
-            </button>
-            <a class="btn btn-ghost" href={products.general.repo} target="_blank" rel="noopener noreferrer">仓库</a>
-          </div>
-        </article>
-
         <article id="game" class="download-block reveal">
           <p class="section-kicker amber">{products.game.label}</p>
           <img class="product-logo product-logo-sm" src={products.game.logo} alt="" width="260" height="62" data-logo-light={products.game.logo} data-logo-dark={products.game.logoDark} />
@@ -38,6 +26,18 @@ import { products } from '../site';
               {products.game.downloadLabel}
             </button>
             <a class="btn btn-ghost" href={products.game.repo} target="_blank" rel="noopener noreferrer">仓库</a>
+          </div>
+        </article>
+
+        <article id="general" class="download-block reveal">
+          <p class="section-kicker teal">{products.general.label}</p>
+          <img class="product-logo product-logo-sm" src={products.general.logo} alt="" width="240" height="62" data-logo-light={products.general.logo} data-logo-dark={products.general.logoDark} />
+          <p>{products.general.blurb}</p>
+          <div class="btn-row">
+            <button type="button" class="btn btn-teal" data-open-astral-download>
+              {products.general.downloadLabel}
+            </button>
+            <a class="btn btn-ghost" href={products.general.repo} target="_blank" rel="noopener noreferrer">仓库</a>
           </div>
         </article>
       </div>

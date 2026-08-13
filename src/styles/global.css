@@ -670,7 +670,7 @@ html[data-theme='dark'] .fx-dust {
   border-radius: calc(var(--radius) + 0.15rem);
   box-shadow:
     0 22px 50px color-mix(in srgb, var(--ink) 12%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--teal) 10%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--amber) 12%, transparent);
 }
 
 .stage-desk.front {
@@ -682,15 +682,15 @@ html[data-theme='dark'] .fx-dust {
 }
 
 .hero-stage .shot-chrome i:nth-child(1) {
-  background: color-mix(in srgb, var(--teal) 80%, transparent);
+  background: color-mix(in srgb, var(--amber) 80%, transparent);
 }
 
 .hero-stage .shot-chrome i:nth-child(2) {
-  background: color-mix(in srgb, var(--teal) 45%, transparent);
+  background: color-mix(in srgb, var(--amber) 45%, transparent);
 }
 
 .hero-stage .shot-chrome i:nth-child(3) {
-  background: color-mix(in srgb, var(--teal) 22%, transparent);
+  background: color-mix(in srgb, var(--amber) 22%, transparent);
 }
 
 .stage-desk.back {
@@ -702,7 +702,7 @@ html[data-theme='dark'] .fx-dust {
   transform: rotate(7deg);
   box-shadow:
     0 16px 36px color-mix(in srgb, var(--ink) 10%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--amber) 16%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--teal) 16%, transparent);
   opacity: 0.94;
 }
 
@@ -722,7 +722,7 @@ html[data-theme='dark'] .fx-dust {
   border-radius: 1.25rem;
   box-shadow:
     0 18px 40px color-mix(in srgb, var(--ink) 16%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--teal) 18%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--amber) 18%, transparent);
   transform: rotate(5deg);
 }
 

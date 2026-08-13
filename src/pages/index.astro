@@ -17,31 +17,31 @@ import { products, site } from '../site';
         </h1>
         <p class="hero-lead">开黑用游戏版，自己组网用通用版。</p>
         <div class="hero-actions path-grid" role="navigation" aria-label="选择产品">
-          <a class="path-link teal" href={products.general.path}>
-            <img class="path-mark" src={products.general.mark} alt="" width="40" height="40" />
-            <span class="path-kicker">{products.general.label}</span>
-            <span class="path-title">{products.general.ctaHome}</span>
-            <span class="path-desc">{products.general.blurb}</span>
-          </a>
           <a class="path-link amber" href={products.game.path}>
             <img class="path-mark" src={products.game.mark} alt="" width="40" height="40" />
             <span class="path-kicker">{products.game.label}</span>
             <span class="path-title">{products.game.ctaHome}</span>
             <span class="path-desc">{products.game.blurb}</span>
           </a>
+          <a class="path-link teal" href={products.general.path}>
+            <img class="path-mark" src={products.general.mark} alt="" width="40" height="40" />
+            <span class="path-kicker">{products.general.label}</span>
+            <span class="path-title">{products.general.ctaHome}</span>
+            <span class="path-desc">{products.general.blurb}</span>
+          </a>
         </div>
       </div>
 
       <div class="hero-stage" aria-hidden="true">
         <figure class="stage-desk back">
-          <img src="/shots/game.webp" alt="" width="924" height="507" />
+          <img src="/shots/astral.webp" alt="" width="924" height="507" />
         </figure>
         <figure class="stage-desk front">
           <div class="shot-chrome"><i></i><i></i><i></i></div>
-          <img src="/shots/astral.webp" alt="" width="924" height="507" />
+          <img src="/shots/game.webp" alt="" width="924" height="507" />
         </figure>
         <figure class="stage-phone">
-          <img src="/shots/astral-phone.webp" alt="" width="471" height="1024" />
+          <img src="/shots/game-phone.webp" alt="" width="409" height="769" />
         </figure>
       </div>
     </div>
@@ -56,17 +56,6 @@ import { products, site } from '../site';
       </div>
 
       <div class="pick-grid reveal">
-        <a class="pick-card teal" href={products.general.path}>
-          <div class="pick-visual">
-            <img class="pick-desk" src="/shots/astral.webp" alt="" width="924" height="507" />
-            <img class="pick-phone" src="/shots/astral-phone.webp" alt="" width="471" height="1024" />
-          </div>
-          <div class="pick-body">
-            <span class="pick-kicker">{products.general.label}</span>
-            <strong class="pick-title">{products.general.ctaHome}</strong>
-            <span class="pick-desc">{products.general.blurb}</span>
-          </div>
-        </a>
         <a class="pick-card amber" href={products.game.path}>
           <div class="pick-visual">
             <img class="pick-desk" src="/shots/game.webp" alt="" width="924" height="507" />
@@ -76,6 +65,17 @@ import { products, site } from '../site';
             <span class="pick-kicker">{products.game.label}</span>
             <strong class="pick-title">{products.game.ctaHome}</strong>
             <span class="pick-desc">{products.game.blurb}</span>
+          </div>
+        </a>
+        <a class="pick-card teal" href={products.general.path}>
+          <div class="pick-visual">
+            <img class="pick-desk" src="/shots/astral.webp" alt="" width="924" height="507" />
+            <img class="pick-phone" src="/shots/astral-phone.webp" alt="" width="471" height="1024" />
+          </div>
+          <div class="pick-body">
+            <span class="pick-kicker">{products.general.label}</span>
+            <strong class="pick-title">{products.general.ctaHome}</strong>
+            <span class="pick-desc">{products.general.blurb}</span>
           </div>
         </a>
       </div>
