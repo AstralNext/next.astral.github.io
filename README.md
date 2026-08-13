@@ -1,18 +1,19 @@
 # Astral
 
-一套站、两种用法（通用版 / 游戏版）。暂不含完整文档——教程继续使用 [astral.fan](https://astral.fan/)。
+通用组网与游戏联机。暂不含完整文档——教程继续使用 [astral.fan](https://astral.fan/)。
 
-- 站点域名（规划）：[https://next.astral.fan](https://next.astral.fan)
+- 站点：[https://next.astral.fan](https://next.astral.fan)
 - 本地仓库：`next.astral.github.io`
 
 ## 页面
 
 | 路径 | 说明 |
 |------|------|
-| `/` | 品牌首页 + 通用 / 游戏分流 |
-| `/astral/` | 通用版介绍与下载 |
-| `/game/` | 游戏版介绍与下载 |
-| `/download/` | 双产品下载并列 |
+| `/` | 首页分流 |
+| `/astral/` | 通用版 |
+| `/game/` | 游戏版 |
+| `/j/` | 房间邀请落地（跳转 `astralgame://`） |
+| `/download/` | 下载 |
 
 下载与仓库 URL 集中在 [`src/site.ts`](src/site.ts)。
 

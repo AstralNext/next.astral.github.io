@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import { products } from '../site';
+
+const p = products.game;
+---
+
+<Base
+  title="加入房间"
+  description="正在打开 Astral Game…"
+  currentPath="/j/"
+>
+  <section class="product-hero">
+    <div class="shell">
+      <div class="section-head">
+        <p class="section-kicker amber">{p.label}</p>
+        <h1 class="section-title" id="join-title">正在打开 Astral Game…</h1>
+        <p class="section-lead" id="join-lead">若没有自动跳转，请安装游戏版后重试。</p>
+        <div class="btn-row" style="margin-top: 0.5rem;">
+          <a class="btn btn-amber" id="open-app" href="#">打开 Astral Game</a>
+          <a class="btn btn-ghost" href={p.path}>{p.downloadLabel}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script is:inline>
+  (() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = (params.get('c') || params.get('code') || '').trim();
+    const title = document.getElementById('join-title');
+    const lead = document.getElementById('join-lead');
+    const open = document.getElementById('open-app');
+
+    if (!token) {
+      if (title) title.textContent = '邀请链接无效';
+      if (lead) lead.textContent = '缺少房间参数。请让好友重新分享。';
+      if (open) open.style.display = 'none';
+      return;
+    }
+
+    const deep = 'astralgame://join?c=' + encodeURIComponent(token);
+    if (open) open.setAttribute('href', deep);
+    window.location.replace(deep);
+  })();
+</script>
