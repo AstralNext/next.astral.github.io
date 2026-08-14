@@ -6,6 +6,7 @@ export const site = {
   url: 'https://next.astral.fan',
   docsLegacy: 'https://astral.fan/',
   docsGame: 'https://acg-n.cn/archive/category/AstralGame/',
+  docsRaft: 'https://acg-n.cn/posts/Raft%E8%81%94%E6%9C%BA%E6%95%99%E7%A8%8B/',
   aml: 'https://aml.astral.fan/',
   githubOrg: 'https://github.com/AstralNext',
   easytier: 'https://easytier.cn/',
