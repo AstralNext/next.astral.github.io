@@ -1,7 +1,8 @@
 /** Site-wide links and product metadata. Change here when repos move. */
 export const site = {
   name: 'Astral',
-  tagline: '开黑用游戏版，自己组网用通用版',
+  /** 首页一言失败时的兜底；正常会换成动漫一言 */
+  tagline: '把远方拉近一点',
   url: 'https://next.astral.fan',
   docsLegacy: 'https://astral.fan/',
   aml: 'https://aml.astral.fan/',
@@ -33,7 +34,7 @@ export const products = {
     name: 'Astral Game',
     label: '游戏版',
     path: '/game/',
-    blurb: '建房发短码，进房开黑',
+    blurb: '持续游戏适配 · Raft 等',
     ctaHome: '游戏联机',
     downloadLabel: '下载游戏版',
     releases: 'https://github.com/AstralNext/AstralGame/releases',

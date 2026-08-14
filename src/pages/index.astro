@@ -5,7 +5,7 @@ import { products, site } from '../site';
 
 <Base
   title="Astral"
-  description="Astral：开黑用游戏版，自己组网用通用版。"
+  description="Astral · Next — 游戏联机与通用组网。"
   currentPath="/"
 >
   <section class="hero">
@@ -15,7 +15,8 @@ import { products, site } from '../site';
           <span>Next</span>
           <span class="hero-brand-word">Astral</span>
         </h1>
-        <p class="hero-lead">开黑用游戏版，自己组网用通用版。</p>
+        <p class="hero-lead" id="hero-hitokoto" data-fallback={site.tagline}>{site.tagline}</p>
+        <p class="hero-cite" id="hero-hitokoto-from" hidden></p>
         <div class="hero-actions path-grid" role="navigation" aria-label="选择产品">
           <a class="path-link amber" href={products.game.path}>
             <img class="path-mark" src={products.game.mark} alt="" width="40" height="40" />
@@ -83,6 +84,43 @@ import { products, site } from '../site';
   </section>
 </Base>
 
+<script>
+  const lead = document.getElementById('hero-hitokoto');
+  const cite = document.getElementById('hero-hitokoto-from');
+  if (lead) {
+    const fallback = lead.dataset.fallback?.trim() || lead.textContent?.trim() || '';
+    const apply = (text: string, from = '') => {
+      lead.textContent = text;
+      if (cite instanceof HTMLElement) {
+        if (from) {
+          cite.textContent = `— ${from}`;
+          cite.hidden = false;
+        } else {
+          cite.textContent = '';
+          cite.hidden = true;
+        }
+      }
+    };
+    try {
+      const res = await fetch('https://v1.hitokoto.cn/?c=a', {
+        signal: AbortSignal.timeout(4500),
+      });
+      if (!res.ok) throw new Error(`hitokoto ${res.status}`);
+      const data = (await res.json()) as {
+        hitokoto?: string;
+        from?: string;
+        from_who?: string | null;
+      };
+      const text = String(data.hitokoto ?? '').trim();
+      if (!text) throw new Error('empty hitokoto');
+      const from = [data.from_who, data.from].filter(Boolean).join(' · ');
+      apply(text, from);
+    } catch {
+      apply(fallback);
+    }
+  }
+</script>
+
 <style is:global>
   .home-et {
     padding-top: 0;
@@ -98,5 +136,14 @@ import { products, site } from '../site';
     color: var(--teal);
     text-decoration: underline;
     text-underline-offset: 0.15em;
+  }
+  .hero-cite {
+    margin: -0.7rem 0 0;
+    max-width: 28rem;
+    font-size: 0.88rem;
+    color: var(--muted);
+    font-style: normal;
+    opacity: 0;
+    animation: rise 0.9s var(--ease) 0.28s forwards;
   }
 </style>
