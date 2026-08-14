@@ -1359,8 +1359,14 @@ html[data-theme='dark'] .fx-dust {
 
 @media (min-width: 800px) {
   .next-links {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .next-links {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
