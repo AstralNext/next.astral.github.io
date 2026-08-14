@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import VisitorCounter from '../components/VisitorCounter.astro';
 import { products, site } from '../site';
 ---
 
@@ -84,6 +85,7 @@ import { products, site } from '../site';
         <a href={site.easytier} target="_blank" rel="noopener noreferrer">EasyTier</a>
         。
       </p>
+      <VisitorCounter name="astralnext-home" />
     </div>
   </section>
 </Base>

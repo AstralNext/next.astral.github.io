@@ -1,0 +1,61 @@
+---
+export interface Props {
+  name?: string;
+  theme?: string;
+  padding?: number;
+  offset?: number;
+  align?: 'top' | 'center' | 'bottom';
+  scale?: number;
+  pixelated?: number;
+  darkmode?: 'auto' | 'light' | 'dark';
+}
+
+const {
+  name = 'astralnext-home',
+  theme = 'original-new',
+  padding = 7,
+  offset = 0,
+  align = 'top',
+  scale = 1,
+  pixelated = 1,
+  darkmode = 'auto',
+} = Astro.props;
+
+const params = new URLSearchParams({
+  name,
+  theme,
+  padding: String(padding),
+  offset: String(offset),
+  align,
+  scale: String(scale),
+  pixelated: String(pixelated),
+  darkmode,
+});
+
+const imageUrl = `https://count.getloli.com/@astralnext?${params.toString()}`;
+---
+
+<p class="visit-counter">
+  <img
+    src={imageUrl}
+    alt="AstralNext 访问计数"
+    width="240"
+    height="48"
+    decoding="async"
+    class="visit-counter-img"
+  />
+</p>
+
+<style>
+  .visit-counter {
+    margin: 1.5rem 0 0;
+    text-align: center;
+  }
+  .visit-counter-img {
+    display: inline-block;
+    max-width: min(100%, 22rem);
+    height: auto;
+    image-rendering: pixelated;
+    vertical-align: middle;
+  }
+</style>
