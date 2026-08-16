@@ -20,7 +20,7 @@ import { products, site } from '../site';
         <p class="hero-cite" id="hero-hitokoto-from" hidden></p>
         <div class="hero-actions path-grid" role="navigation" aria-label="选择产品">
           <a class="path-link amber" href={products.game.path}>
-            <img class="path-mark" src={products.game.mark} alt="" width="40" height="40" />
+            <img class="path-mark" src={products.game.mark} alt="" width="40" height="40" data-logo-light={products.game.mark} data-logo-dark={products.game.markDark} />
             <span class="path-kicker">{products.game.label}</span>
             <span class="path-title">{products.game.ctaHome}</span>
             <span class="path-desc">{products.game.blurb}</span>
