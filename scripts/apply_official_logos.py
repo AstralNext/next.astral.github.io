@@ -6,11 +6,13 @@ logos = root / "public" / "logos"
 TEAL = "#0F766E"
 TEAL_FG = "#F0FDFA"
 INK = "#14201C"
-INK_FG = "#F8FAFC"
 INK_LIGHT = "#E8F0EC"
 MUTED = "#6B7C74"
 MUTED_DARK = "#84948C"
-PLATE_GAME = "#F4F4F5"
+BLACK = "#000000"
+WHITE = "#FFFFFF"
+GRAY = "#737373"
+GRAY_LIGHT = "#A3A3A3"
 
 
 def mark_app(bg: str, fg: str) -> str:
@@ -65,16 +67,16 @@ def lockup_game(bg: str, fg: str, word: str, game_word: str, sub: str) -> str:
 
 files = {
     logos / "astral-general-mark.svg": mark_app(TEAL, TEAL_FG),
-    logos / "astral-game-mark.svg": mark_app(INK, INK_FG),
+    logos / "astral-game-mark.svg": mark_app(BLACK, WHITE),
     root / "public" / "favicon.svg": mark_app(TEAL, TEAL_FG),
     logos / "astral-general.svg": lockup_general(TEAL, TEAL_FG, INK, MUTED),
     logos / "astral-general-dark.svg": lockup_general(TEAL, TEAL_FG, INK_LIGHT, MUTED_DARK),
-    logos / "astral-game.svg": lockup_game(INK, INK_FG, INK, INK, MUTED),
-    logos / "astral-game-dark.svg": lockup_game(INK, INK_FG, INK_LIGHT, INK_LIGHT, MUTED_DARK),
+    logos / "astral-game.svg": lockup_game(BLACK, WHITE, BLACK, BLACK, GRAY),
+    logos / "astral-game-dark.svg": lockup_game(BLACK, WHITE, WHITE, WHITE, GRAY_LIGHT),
     logos / "concepts" / "icon-classic-bold-general.svg": mark_app(TEAL, TEAL_FG),
-    logos / "concepts" / "icon-classic-bold-game.svg": mark_app(INK, INK_FG),
+    logos / "concepts" / "icon-classic-bold-game.svg": mark_app(BLACK, WHITE),
     logos / "concepts" / "icon-classic-bold-general-soft.svg": mark_app("#ECFDF5", TEAL),
-    logos / "concepts" / "icon-classic-bold-game-soft.svg": mark_app(PLATE_GAME, INK),
+    logos / "concepts" / "icon-classic-bold-game-soft.svg": mark_app(WHITE, BLACK),
 }
 
 for path, content in files.items():
