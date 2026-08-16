@@ -21,16 +21,16 @@ const game = products.game;
     <h2 id="dl-astral-title">下载通用版</h2>
     <p class="dl-ver" data-dl-ver>正在获取最新版本…</p>
     <div class="dl-tabs" role="tablist">
-      <button type="button" class="dl-tab is-on" data-dl-tab="quark" role="tab" aria-selected="true">夸克网盘</button>
-      <button type="button" class="dl-tab" data-dl-tab="github" role="tab" aria-selected="false">GitHub</button>
+      <button type="button" class="dl-tab is-on" data-dl-tab="github" role="tab" aria-selected="true">GitHub</button>
+      <button type="button" class="dl-tab" data-dl-tab="quark" role="tab" aria-selected="false">夸克网盘</button>
     </div>
-    <div class="dl-pane" data-dl-pane="quark" role="tabpanel">
-      <p class="dl-hint">国内直链，推荐优先使用。</p>
-      <div class="dl-list" data-dl-quark>加载中…</div>
-    </div>
-    <div class="dl-pane" data-dl-pane="github" role="tabpanel" hidden>
+    <div class="dl-pane" data-dl-pane="github" role="tabpanel">
       <p class="dl-hint">自动读取 GitHub Release 最新包。</p>
       <div class="dl-list" data-dl-github>加载中…</div>
+    </div>
+    <div class="dl-pane" data-dl-pane="quark" role="tabpanel" hidden>
+      <p class="dl-hint">GitHub 较慢时可用。</p>
+      <div class="dl-list" data-dl-quark>加载中…</div>
     </div>
   </div>
 </dialog>
@@ -51,16 +51,16 @@ const game = products.game;
     <h2 id="dl-game-title">下载游戏版</h2>
     <p class="dl-ver" data-dl-ver>正在获取最新版本…</p>
     <div class="dl-tabs" role="tablist">
-      <button type="button" class="dl-tab is-on" data-dl-tab="quark" role="tab" aria-selected="true">夸克网盘</button>
-      <button type="button" class="dl-tab" data-dl-tab="github" role="tab" aria-selected="false">GitHub</button>
+      <button type="button" class="dl-tab is-on" data-dl-tab="github" role="tab" aria-selected="true">GitHub</button>
+      <button type="button" class="dl-tab" data-dl-tab="quark" role="tab" aria-selected="false">夸克网盘</button>
     </div>
-    <div class="dl-pane" data-dl-pane="quark" role="tabpanel">
-      <p class="dl-hint">国内直链，推荐优先使用。</p>
-      <div class="dl-list" data-dl-quark>加载中…</div>
-    </div>
-    <div class="dl-pane" data-dl-pane="github" role="tabpanel" hidden>
+    <div class="dl-pane" data-dl-pane="github" role="tabpanel">
       <p class="dl-hint">自动读取 GitHub Release 最新包。</p>
       <div class="dl-list" data-dl-github>加载中…</div>
+    </div>
+    <div class="dl-pane" data-dl-pane="quark" role="tabpanel" hidden>
+      <p class="dl-hint">GitHub 较慢时可用。</p>
+      <div class="dl-list" data-dl-quark>加载中…</div>
     </div>
   </div>
 </dialog>
@@ -126,7 +126,7 @@ const game = products.game;
         if (!res.ok) throw new Error('github');
         const data = await res.json();
         const tag = data.tag_name || 'latest';
-        if (verEl && dialog.dataset.verSource !== 'quark') {
+        if (verEl) {
           const date = data.published_at
             ? new Date(data.published_at).toLocaleDateString('zh-CN')
             : '';
@@ -161,9 +161,7 @@ const game = products.game;
           ghList.appendChild(row);
         });
       } catch (_err) {
-        if (verEl && dialog.dataset.verSource !== 'quark') {
-          verEl.textContent = 'GitHub 暂时不可用';
-        }
+        if (verEl) verEl.textContent = 'GitHub 暂时不可用';
         ghList.textContent = '';
         ghList.appendChild(makeBtn(releases, '打开 GitHub Release', accentBtn(dialog)));
       }
@@ -172,7 +170,6 @@ const game = products.game;
     const loadQuark = async (dialog) => {
       const jsonUrl = dialog.getAttribute('data-downloads-json') || '';
       const qkList = dialog.querySelector('[data-dl-quark]');
-      const verEl = dialog.querySelector('[data-dl-ver]');
       if (!qkList) return;
       try {
         const res = await fetch(jsonUrl, { cache: 'no-store' });
@@ -181,10 +178,6 @@ const game = products.game;
         const latest = (list || []).find((x) => x && String(x.url || '').trim());
         if (!latest) throw new Error('empty');
         const ver = latest.version || '最新';
-        if (verEl) {
-          verEl.textContent = ver;
-          dialog.dataset.verSource = 'quark';
-        }
         qkList.textContent = '';
         const row = document.createElement('div');
         row.className = 'dl-item';
@@ -205,7 +198,7 @@ const game = products.game;
         qkList.textContent = '';
         const p = document.createElement('p');
         p.className = 'dl-empty';
-        p.textContent = '网盘链接暂未就绪，可切换到 GitHub 下载。';
+        p.textContent = '网盘链接暂未就绪，请先用 GitHub 下载。';
         qkList.appendChild(p);
       }
     };
@@ -215,8 +208,8 @@ const game = products.game;
       dialog.showModal();
       if (dialog.dataset.loaded !== '1') {
         dialog.dataset.loaded = '1';
-        loadQuark(dialog);
         loadGithub(dialog);
+        loadQuark(dialog);
       }
     };
 
