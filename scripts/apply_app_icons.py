@@ -5,13 +5,13 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 TEAL = (15, 118, 110, 255)       # #0F766E
-AMBER = (194, 120, 3, 255)       # #C27803
+INK = (20, 32, 28, 255)          # #14201C
 TEAL_FG = (240, 253, 250, 255)   # #F0FDFA
-AMBER_FG = (255, 251, 235, 255)  # #FFFBEB
+INK_FG = (248, 250, 252, 255)    # #F8FAFC
 
 ASTRAL2 = Path(r"C:\Users\baika\Documents\GitHub\Astral2")
-ASTRAL_GAME = Path(r"C:\Users\baika\Documents\GitHub\AstralGame")
-PORTAL = Path(r"C:\Users\baika\Documents\GitHub\next.astral.github.io")
+ASTRAL_GAME = Path(r"J:\Documents\GitHub\AstralGame")
+PORTAL = Path(r"J:\Documents\GitHub\next.astral.github.io")
 
 
 def draw_classic_bold(size: int, bg: tuple, fg: tuple) -> Image.Image:
@@ -92,8 +92,9 @@ def apply_product(app_root: Path, bg, fg, also_android=True) -> None:
 
 
 def main() -> None:
-    apply_product(ASTRAL2, TEAL, TEAL_FG, also_android=True)
-    apply_product(ASTRAL_GAME, AMBER, AMBER_FG, also_android=True)
+    if ASTRAL2.exists():
+        apply_product(ASTRAL2, TEAL, TEAL_FG, also_android=True)
+    apply_product(ASTRAL_GAME, INK, INK_FG, also_android=True)
 
     # also drop PNGs next to portal concepts for reference
     save_png(
@@ -102,7 +103,7 @@ def main() -> None:
     )
     save_png(
         PORTAL / "public" / "logos" / "concepts" / "icon-classic-bold-game.png",
-        draw_classic_bold(512, AMBER, AMBER_FG),
+        draw_classic_bold(512, INK, INK_FG),
     )
     print("done")
 

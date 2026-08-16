@@ -4,9 +4,9 @@ import json
 out = Path(__file__).resolve().parents[1] / "public" / "logos" / "concepts"
 
 TEAL = "#0F766E"
-AMBER = "#C27803"
+INK = "#14201C"
 TEAL_FG = "#F0FDFA"
-AMBER_FG = "#FFFBEB"
+INK_FG = "#F8FAFC"
 
 SIZE = 512
 RX = 112
@@ -42,7 +42,7 @@ keep_names = set()
 meta = []
 
 for key, (title, desc, fn) in forms.items():
-    for product, bg, fg in (("general", TEAL, TEAL_FG), ("game", AMBER, AMBER_FG)):
+    for product, bg, fg in (("general", TEAL, TEAL_FG), ("game", INK, INK_FG)):
         name = f"icon-{key}-{product}.svg"
         (out / name).write_text(icon(bg, fn(fg)), encoding="utf-8")
         keep_names.add(name)
@@ -50,7 +50,7 @@ for key, (title, desc, fn) in forms.items():
     meta.append({"id": key, "title": title, "desc": desc})
 
 for key, (title, desc, fn) in forms.items():
-    for product, plate, mark in (("general", "#ECFDF5", TEAL), ("game", "#FFFBEB", AMBER)):
+    for product, plate, mark in (("general", "#ECFDF5", TEAL), ("game", "#F4F4F5", INK)):
         name = f"icon-{key}-{product}-soft.svg"
         (out / name).write_text(icon(plate, fn(mark)), encoding="utf-8")
         keep_names.add(name)
