@@ -46,9 +46,8 @@ export const products = {
     githubProxy: 'https://gh.astral.fan/',
     repo: 'https://github.com/AstralNext/AstralGame',
     accent: 'amber',
-    logo: '/logos/astral-game.svg?v=bw2',
-    logoDark: '/logos/astral-game-dark.svg?v=bw2',
-    mark: '/logos/astral-game-mark.svg?v=bw2',
-    markDark: '/logos/astral-game-mark-dark.svg?v=bw2',
+    logo: '/logos/astral-game.svg?v=bw3',
+    logoDark: '/logos/astral-game-dark.svg?v=bw3',
+    mark: '/logos/astral-game-mark.svg?v=bw3',
   },
 } as const;

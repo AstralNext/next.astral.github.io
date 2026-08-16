@@ -50,7 +50,7 @@ for key, (title, desc, fn) in forms.items():
     meta.append({"id": key, "title": title, "desc": desc})
 
 for key, (title, desc, fn) in forms.items():
-    for product, plate, mark in (("general", "#ECFDF5", TEAL), ("game", WHITE, BLACK)):
+    for product, plate, mark in (("general", "#ECFDF5", TEAL), ("game", BLACK, WHITE)):
         name = f"icon-{key}-{product}-soft.svg"
         (out / name).write_text(icon(plate, fn(mark)), encoding="utf-8")
         keep_names.add(name)
