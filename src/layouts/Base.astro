@@ -87,7 +87,16 @@ const pageTitle = title === 'Astral' ? 'Astral · Next' : `${title} · Astral`;
           <a href="/astral/" aria-current={currentPath === '/astral/' ? 'page' : undefined}>通用版</a>
           <a href="/download/" aria-current={currentPath === '/download/' ? 'page' : undefined}>下载</a>
           <a class="nav-ext" href={site.docsLegacy} target="_blank" rel="noopener noreferrer">旧文档</a>
-          <a class="nav-ext" href={site.qqChannel} target="_blank" rel="noopener noreferrer">腾讯频道</a>
+          <button
+            type="button"
+            class="nav-pill"
+            data-copy-text={site.qqGroupNumber}
+            data-copy-label="QQ群"
+            title={`点击复制群号 ${site.qqGroupNumber}`}
+          >
+            QQ群
+          </button>
+          <a class="nav-pill" href={site.qqChannel} target="_blank" rel="noopener noreferrer">QQ频道</a>
           <a class="nav-ext" href={site.githubOrg} target="_blank" rel="noopener noreferrer">GitHub</a>
           <button
             type="button"
@@ -151,6 +160,25 @@ const pageTitle = title === 'Astral' ? 'Astral · Next' : `${title} · Astral`;
           );
         }
       };
+
+      document.querySelectorAll('[data-copy-text]').forEach((node) => {
+        node.addEventListener('click', async () => {
+          if (!(node instanceof HTMLElement)) return;
+          const text = node.dataset.copyText || '';
+          const label = node.dataset.copyLabel || '内容';
+          if (!text) return;
+          try {
+            await navigator.clipboard.writeText(text);
+            const old = node.textContent;
+            node.textContent = `${label}已复制`;
+            window.setTimeout(() => {
+              node.textContent = old;
+            }, 1200);
+          } catch {
+            window.alert(`${label}：${text}`);
+          }
+        });
+      });
 
       const currentTheme = (): 'light' | 'dark' => {
         const attr = document.documentElement.getAttribute('data-theme');

@@ -9,6 +9,7 @@ export const site = {
   docsRaft: 'https://acg-n.cn/posts/Raft%E8%81%94%E6%9C%BA%E6%95%99%E7%A8%8B/',
   aml: 'https://aml.astral.fan/',
   githubOrg: 'https://github.com/AstralNext',
+  qqGroupNumber: '1106339751',
   qqChannel: 'https://pd.qq.com/s/90vkmvwar',
   easytier: 'https://easytier.cn/',
 } as const;

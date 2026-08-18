@@ -227,6 +227,10 @@ p {
   color: var(--ink-soft);
 }
 
+.nav button {
+  font: inherit;
+}
+
 .nav a:hover,
 .nav a[aria-current='page'] {
   color: var(--ink);
@@ -234,6 +238,35 @@ p {
 
 .nav-ext {
   color: var(--muted) !important;
+}
+
+.nav-pill {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.2rem;
+  padding: 0.42rem 0.82rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  color: var(--ink-soft) !important;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.35s var(--ease);
+}
+
+.nav-pill:hover {
+  color: var(--ink) !important;
+  border-color: color-mix(in srgb, var(--ink) 22%, transparent);
+  transform: translateY(-1px);
+  text-decoration: none;
 }
 
 .theme-toggle {
