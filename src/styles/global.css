@@ -1324,6 +1324,9 @@ html[data-theme='dark'] .fx-dust {
 .dl-list {
   display: grid;
   gap: 0.7rem;
+  max-height: min(22rem, 52vh);
+  overflow: auto;
+  padding-right: 0.15rem;
 }
 
 .dl-item {
@@ -1333,6 +1336,14 @@ html[data-theme='dark'] .fx-dust {
   border: 1px solid var(--line);
   border-radius: 0.9rem;
   background: color-mix(in srgb, var(--surface) 80%, transparent);
+}
+
+.dl-item.is-latest {
+  border-color: color-mix(in srgb, var(--amber) 42%, var(--line));
+}
+
+.dl-dialog[data-accent='teal'] .dl-item.is-latest {
+  border-color: color-mix(in srgb, var(--teal) 42%, var(--line));
 }
 
 .dl-item strong {

@@ -21,16 +21,16 @@ const game = products.game;
     <h2 id="dl-astral-title">下载通用版</h2>
     <p class="dl-ver" data-dl-ver>正在获取最新版本…</p>
     <div class="dl-tabs" role="tablist">
-      <button type="button" class="dl-tab is-on" data-dl-tab="github" role="tab" aria-selected="true">GitHub</button>
-      <button type="button" class="dl-tab" data-dl-tab="quark" role="tab" aria-selected="false">夸克网盘</button>
+      <button type="button" class="dl-tab is-on" data-dl-tab="quark" role="tab" aria-selected="true">夸克网盘</button>
+      <button type="button" class="dl-tab" data-dl-tab="github" role="tab" aria-selected="false">GitHub</button>
     </div>
-    <div class="dl-pane" data-dl-pane="github" role="tabpanel">
-      <p class="dl-hint">自动读取 GitHub Release 最新包。</p>
-      <div class="dl-list" data-dl-github>加载中…</div>
-    </div>
-    <div class="dl-pane" data-dl-pane="quark" role="tabpanel" hidden>
-      <p class="dl-hint">GitHub 较慢时可用。</p>
+    <div class="dl-pane" data-dl-pane="quark" role="tabpanel">
+      <p class="dl-hint">国内推荐。点开对应版本后，在分享里选平台安装包。</p>
       <div class="dl-list" data-dl-quark>加载中…</div>
+    </div>
+    <div class="dl-pane" data-dl-pane="github" role="tabpanel" hidden>
+      <p class="dl-hint">直链下载最新包；国内较慢可点加速。</p>
+      <div class="dl-list" data-dl-github>加载中…</div>
     </div>
   </div>
 </dialog>
@@ -51,16 +51,16 @@ const game = products.game;
     <h2 id="dl-game-title">下载游戏版</h2>
     <p class="dl-ver" data-dl-ver>正在获取最新版本…</p>
     <div class="dl-tabs" role="tablist">
-      <button type="button" class="dl-tab is-on" data-dl-tab="github" role="tab" aria-selected="true">GitHub</button>
-      <button type="button" class="dl-tab" data-dl-tab="quark" role="tab" aria-selected="false">夸克网盘</button>
+      <button type="button" class="dl-tab is-on" data-dl-tab="quark" role="tab" aria-selected="true">夸克网盘</button>
+      <button type="button" class="dl-tab" data-dl-tab="github" role="tab" aria-selected="false">GitHub</button>
     </div>
-    <div class="dl-pane" data-dl-pane="github" role="tabpanel">
-      <p class="dl-hint">自动读取 GitHub Release 最新包。</p>
-      <div class="dl-list" data-dl-github>加载中…</div>
-    </div>
-    <div class="dl-pane" data-dl-pane="quark" role="tabpanel" hidden>
-      <p class="dl-hint">GitHub 较慢时可用。</p>
+    <div class="dl-pane" data-dl-pane="quark" role="tabpanel">
+      <p class="dl-hint">国内推荐。点开对应版本后，在分享里选平台安装包。</p>
       <div class="dl-list" data-dl-quark>加载中…</div>
+    </div>
+    <div class="dl-pane" data-dl-pane="github" role="tabpanel" hidden>
+      <p class="dl-hint">直链下载最新包；国内较慢可点加速。</p>
+      <div class="dl-list" data-dl-github>加载中…</div>
     </div>
   </div>
 </dialog>
@@ -126,10 +126,11 @@ const game = products.game;
         if (!res.ok) throw new Error('github');
         const data = await res.json();
         const tag = data.tag_name || 'latest';
-        if (verEl) {
+        if (verEl && verEl.dataset.source !== 'quark') {
           const date = data.published_at
             ? new Date(data.published_at).toLocaleDateString('zh-CN')
             : '';
+          verEl.dataset.source = 'github';
           verEl.textContent = date ? tag + ' · ' + date : tag;
         }
         const assets = (data.assets || [])
@@ -161,7 +162,9 @@ const game = products.game;
           ghList.appendChild(row);
         });
       } catch (_err) {
-        if (verEl) verEl.textContent = 'GitHub 暂时不可用';
+        if (verEl && verEl.dataset.source !== 'quark') {
+          verEl.textContent = 'GitHub 暂时不可用';
+        }
         ghList.textContent = '';
         ghList.appendChild(makeBtn(releases, '打开 GitHub Release', accentBtn(dialog)));
       }
@@ -169,31 +172,40 @@ const game = products.game;
 
     const loadQuark = async (dialog) => {
       const jsonUrl = dialog.getAttribute('data-downloads-json') || '';
+      const verEl = dialog.querySelector('[data-dl-ver]');
       const qkList = dialog.querySelector('[data-dl-quark]');
       if (!qkList) return;
       try {
         const res = await fetch(jsonUrl, { cache: 'no-store' });
         if (!res.ok) throw new Error('json');
-        const list = await res.json();
-        const latest = (list || []).find((x) => x && String(x.url || '').trim());
-        if (!latest) throw new Error('empty');
-        const ver = latest.version || '最新';
+        const items = (await res.json() || []).filter((x) => x && String(x.url || '').trim());
+        if (!items.length) throw new Error('empty');
+        const latest = items[0];
+        if (verEl) {
+          const tag = latest.version || '最新';
+          verEl.dataset.source = 'quark';
+          verEl.textContent = latest.date ? tag + ' · ' + latest.date : tag;
+        }
         qkList.textContent = '';
-        const row = document.createElement('div');
-        row.className = 'dl-item';
-        const info = document.createElement('div');
-        const title = document.createElement('strong');
-        title.textContent = '夸克网盘 ' + ver;
-        const desc = document.createElement('span');
-        desc.textContent = '打开分享页，选择对应平台安装包';
-        info.appendChild(title);
-        info.appendChild(desc);
-        const actions = document.createElement('div');
-        actions.className = 'dl-item-actions';
-        actions.appendChild(makeBtn(latest.url, '打开网盘', accentBtn(dialog)));
-        row.appendChild(info);
-        row.appendChild(actions);
-        qkList.appendChild(row);
+        items.forEach((item, index) => {
+          const row = document.createElement('div');
+          row.className = index === 0 ? 'dl-item is-latest' : 'dl-item';
+          const info = document.createElement('div');
+          const title = document.createElement('strong');
+          title.textContent = (item.version || '版本') + (index === 0 ? ' · 最新' : '');
+          const desc = document.createElement('span');
+          desc.textContent = item.date
+            ? item.date + ' · 打开后选择平台安装包'
+            : '打开后选择平台安装包';
+          info.appendChild(title);
+          info.appendChild(desc);
+          const actions = document.createElement('div');
+          actions.className = 'dl-item-actions';
+          actions.appendChild(makeBtn(item.url, '打开网盘', accentBtn(dialog)));
+          row.appendChild(info);
+          row.appendChild(actions);
+          qkList.appendChild(row);
+        });
       } catch (_err) {
         qkList.textContent = '';
         const p = document.createElement('p');
