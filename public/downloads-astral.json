@@ -1,5 +1,13 @@
 [
   {
+<<<<<<< HEAD
+=======
+    "version": "v1.0.6",
+    "date": "2026年8月20日",
+    "url": "https://pan.quark.cn/s/7ea4bee8bdbc"
+  },
+  {
+>>>>>>> 49fbbb6 (Add Astral v1.0.6 Quark download.)
     "version": "v1.0.5",
     "date": "2026年8月20日",
     "url": "https://pan.quark.cn/s/16a014cbc49c"
