@@ -21,6 +21,12 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* 默认浅色；is:inline 脚本会在 CSS 加载前通过内联 style.colorScheme 设好正确值，
+   这里的规则只是为 JS 正常执行后提供声明层的兜底。 */
+html {
+  color-scheme: light;
+}
+
 html[data-theme='dark'] {
   --bg: #0c1210;
   --bg-deep: #070b09;
@@ -36,10 +42,17 @@ html[data-theme='dark'] {
   --amber-deep: #f5c86a;
   --amber-soft: #33260c;
   --theme-color: #0c1210;
+  color-scheme: dark;
 }
 
+html[data-theme='light'] {
+  color-scheme: light;
+}
+
+/* 无 JS 时的 fallback：JS 正常工作时 is:inline 会第一时间写好 data-theme，
+   这里只是极端情况（noscript、JS 被禁用）下的兜底，不会在正常流程中生效。 */
 @media (prefers-color-scheme: dark) {
-  html:not([data-theme='light']) {
+  html:not([data-theme]):not([data-theme='light']) {
     --bg: #0c1210;
     --bg-deep: #070b09;
     --ink: #e8f0ec;
@@ -54,6 +67,7 @@ html[data-theme='dark'] {
     --amber-deep: #f5c86a;
     --amber-soft: #33260c;
     --theme-color: #0c1210;
+    color-scheme: dark;
   }
 }
 
@@ -65,17 +79,6 @@ html[data-theme='dark'] {
 
 html {
   scroll-behavior: smooth;
-  color-scheme: light;
-}
-
-html[data-theme='dark'] {
-  color-scheme: dark;
-}
-
-@media (prefers-color-scheme: dark) {
-  html:not([data-theme='light']) {
-    color-scheme: dark;
-  }
 }
 
 body {
@@ -301,24 +304,50 @@ p {
   height: 1.1rem;
 }
 
-.theme-toggle .icon-moon {
+.theme-toggle .icon-moon,
+.theme-toggle .icon-system {
   display: none;
 }
 
-html[data-theme='dark'] .theme-toggle .icon-sun {
-  display: none;
-}
-
-html[data-theme='dark'] .theme-toggle .icon-moon {
+html[data-theme-state='light'] .theme-toggle .icon-sun {
   display: block;
 }
+html[data-theme-state='light'] .theme-toggle .icon-moon,
+html[data-theme-state='light'] .theme-toggle .icon-system {
+  display: none;
+}
 
+html[data-theme-state='dark'] .theme-toggle .icon-moon {
+  display: block;
+}
+html[data-theme-state='dark'] .theme-toggle .icon-sun,
+html[data-theme-state='dark'] .theme-toggle .icon-system {
+  display: none;
+}
+
+html[data-theme-state='system'] .theme-toggle .icon-system {
+  display: block;
+}
+html[data-theme-state='system'] .theme-toggle .icon-sun,
+html[data-theme-state='system'] .theme-toggle .icon-moon {
+  display: none;
+}
+
+/* 向后兼容：未设置 state 时按之前的逻辑 */
+html:not([data-theme-state]) .theme-toggle .icon-moon {
+  display: none;
+}
+html:not([data-theme-state])[data-theme='dark'] .theme-toggle .icon-sun {
+  display: none;
+}
+html:not([data-theme-state])[data-theme='dark'] .theme-toggle .icon-moon {
+  display: block;
+}
 @media (prefers-color-scheme: dark) {
-  html:not([data-theme='light']) .theme-toggle .icon-sun {
+  html:not([data-theme-state]):not([data-theme='light']) .theme-toggle .icon-sun {
     display: none;
   }
-
-  html:not([data-theme='light']) .theme-toggle .icon-moon {
+  html:not([data-theme-state]):not([data-theme='light']) .theme-toggle .icon-moon {
     display: block;
   }
 }

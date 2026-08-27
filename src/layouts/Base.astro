@@ -36,12 +36,64 @@ const pageTitle = title === 'Astral' ? 'Astral · Next' : `${title} · Astral`;
     <script is:inline>
       (() => {
         const key = 'astral-theme';
-        const stored = localStorage.getItem(key);
-        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = stored === 'light' || stored === 'dark' ? stored : systemDark ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', theme);
+        const LEGAL = ['light', 'dark', 'system'];
+
+        // 读取用户偏好；localStorage 在隐私模式等场景可能抛错，兜底为 system
+        let stored = null;
+        try {
+          stored = localStorage.getItem(key);
+        } catch (_) {}
+        const state = LEGAL.indexOf(stored) >= 0 ? stored : 'system';
+        try {
+          localStorage.setItem(key, state);
+        } catch (_) {}
+
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        // 立刻解析出当前生效的主题：永远是 dark 或 light，没有第三种状态
+        const effective = state === 'system' ? (mql.matches ? 'dark' : 'light') : state;
+
+        const root = document.documentElement;
+        // 1) data-theme 属性：CSS [data-theme=...] 选择器用
+        root.setAttribute('data-theme-state', state);
+        root.setAttribute('data-theme', effective);
+        // 2) 内联 color-scheme：最高特异性，在 CSS 文件加载前就告诉浏览器正确配色，
+        //    防止浏览器在 CSS 到达前用 color-scheme: light dark 的自动选择产生深色闪帧
+        root.style.colorScheme = effective;
+
+        // 同步 meta theme-color（浏览器 UI 颜色）
         const meta = document.querySelector('meta[data-theme-color]');
-        if (meta) meta.setAttribute('content', theme === 'dark' ? '#0c1210' : '#f4f7f5');
+        if (meta) meta.setAttribute('content', effective === 'dark' ? '#0c1210' : '#f4f7f5');
+
+        const applyEffective = (theme) => {
+          if (root.getAttribute('data-theme') === theme) return;
+          root.setAttribute('data-theme', theme);
+          root.style.colorScheme = theme;
+          const m = document.querySelector('meta[data-theme-color]');
+          if (m) m.setAttribute('content', theme === 'dark' ? '#0c1210' : '#f4f7f5');
+        };
+
+        // 系统主题切换：仅当用户偏好是 system 时，实时更新 data-theme
+        const onSysChange = () => {
+          if (root.getAttribute('data-theme-state') !== 'system') return;
+          applyEffective(mql.matches ? 'dark' : 'light');
+          window.dispatchEvent(new CustomEvent('astral-theme-syschange', { detail: { theme: mql.matches ? 'dark' : 'light' } }));
+        };
+        if (mql.addEventListener) {
+          mql.addEventListener('change', onSysChange);
+        } else {
+          mql.addListener(onSysChange);
+        }
+
+        // 多标签页同步
+        window.addEventListener('storage', (e) => {
+          if (e.key !== key) return;
+          const v = e.newValue;
+          if (LEGAL.indexOf(v) < 0) return;
+          root.setAttribute('data-theme-state', v);
+          const eff = v === 'system' ? (mql.matches ? 'dark' : 'light') : v;
+          applyEffective(eff);
+          window.dispatchEvent(new CustomEvent('astral-theme-syschange', { detail: { theme: eff } }));
+        });
       })();
     </script>
   </head>
@@ -86,6 +138,7 @@ const pageTitle = title === 'Astral' ? 'Astral · Next' : `${title} · Astral`;
           <a href="/game/" aria-current={currentPath === '/game/' ? 'page' : undefined}>游戏版</a>
           <a href="/astral/" aria-current={currentPath === '/astral/' ? 'page' : undefined}>通用版</a>
           <a href="/download/" aria-current={currentPath === '/download/' ? 'page' : undefined}>下载</a>
+          <a class="nav-ext" href={site.blog} target="_blank" rel="noopener noreferrer">博客</a>
           <a class="nav-ext" href={site.docsLegacy} target="_blank" rel="noopener noreferrer">旧文档</a>
           <button
             type="button"
@@ -102,8 +155,8 @@ const pageTitle = title === 'Astral' ? 'Astral · Next' : `${title} · Astral`;
             type="button"
             class="theme-toggle"
             data-theme-toggle
-            aria-label="切换深色模式"
-            title="切换深色 / 浅色"
+            aria-label="切换主题"
+            title="浅色 · 深色 · 跟随系统"
           >
             <svg class="icon-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"></circle>
@@ -119,6 +172,11 @@ const pageTitle = title === 'Astral' ? 'Astral · Next' : `${title} · Astral`;
                 stroke="currentColor"
                 stroke-width="1.8"
                 stroke-linejoin="round"></path>
+            </svg>
+            <svg class="icon-system" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.8"></rect>
+              <path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+              <path d="M6.5 7.5h4M6.5 10h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
             </svg>
           </button>
         </nav>
@@ -145,20 +203,63 @@ const pageTitle = title === 'Astral' ? 'Astral · Next' : `${title} · Astral`;
     <AppDownloadDialogs />
 
     <script>
+      type ThemeState = 'light' | 'dark' | 'system';
       const key = 'astral-theme';
+      const mql = window.matchMedia('(prefers-color-scheme: dark)');
+      const LEGAL = new Set<ThemeState>(['light', 'dark', 'system']);
 
-      const applyTheme = (theme: 'light' | 'dark') => {
+      const getState = (): ThemeState => {
+        const attr = document.documentElement.getAttribute('data-theme-state');
+        if (LEGAL.has(attr as ThemeState)) return attr as ThemeState;
+        const stored = localStorage.getItem(key);
+        if (LEGAL.has(stored as ThemeState)) return stored as ThemeState;
+        return 'system';
+      };
+
+      const resolveTheme = (state: ThemeState): 'light' | 'dark' => {
+        if (state === 'system') return mql.matches ? 'dark' : 'light';
+        return state;
+      };
+
+      const labelFor = (state: ThemeState) => {
+        if (state === 'light') return '浅色模式';
+        if (state === 'dark') return '深色模式';
+        return '跟随系统';
+      };
+
+      /** 根据 state 把 data-theme、meta 和内联 color-scheme 更新到正确值。
+       *  注意：永远写死 data-theme=dark/light，system 时也会解析为当前值，
+       *  保证 CSS [data-theme=...] 选择器第一帧就命中，彻底消除闪烁。 */
+      const applyTheme = (state: ThemeState) => {
+        const theme = resolveTheme(state);
         document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem(key, theme);
+        document.documentElement.style.colorScheme = theme;
         const meta = document.querySelector('meta[data-theme-color]');
         if (meta) meta.setAttribute('content', theme === 'dark' ? '#0c1210' : '#f4f7f5');
-        const btn = document.querySelector('[data-theme-toggle]');
-        if (btn instanceof HTMLButtonElement) {
-          btn.setAttribute(
-            'aria-label',
-            theme === 'dark' ? '切换为浅色模式' : '切换为深色模式',
-          );
-        }
+      };
+
+      const refreshBtn = (state: ThemeState) => {
+        const btn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+        if (!btn) return;
+        const next: ThemeState =
+          state === 'light' ? 'dark' : state === 'dark' ? 'system' : 'light';
+        btn.setAttribute('aria-label', `当前：${labelFor(state)}，点击切换到${labelFor(next)}`);
+        btn.title = `当前：${labelFor(state)} · 浅色 · 深色 · 跟随系统`;
+      };
+
+      const applyState = (state: ThemeState) => {
+        localStorage.setItem(key, state);
+        document.documentElement.setAttribute('data-theme-state', state);
+        applyTheme(state);
+        refreshBtn(state);
+      };
+
+      const syncLogos = () => {
+        const dark = resolveTheme(getState()) === 'dark';
+        document.querySelectorAll<HTMLImageElement>('[data-logo-light][data-logo-dark]').forEach((img) => {
+          const next = dark ? img.dataset.logoDark : img.dataset.logoLight;
+          if (next && img.getAttribute('src') !== next) img.setAttribute('src', next);
+        });
       };
 
       document.querySelectorAll('[data-copy-text]').forEach((node) => {
@@ -180,32 +281,25 @@ const pageTitle = title === 'Astral' ? 'Astral · Next' : `${title} · Astral`;
         });
       });
 
-      const currentTheme = (): 'light' | 'dark' => {
-        const attr = document.documentElement.getAttribute('data-theme');
-        if (attr === 'dark' || attr === 'light') return attr;
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      };
+      // is:inline 里已经挂了 mql 监听器并会实时更新 data-theme + 派发自定义事件；
+      // 这里监听自定义事件来同步 logo 等"非 CSS 变量"资源。
+      window.addEventListener('astral-theme-syschange', () => {
+        syncLogos();
+      });
 
-      const syncLogos = () => {
-        const dark = currentTheme() === 'dark';
-        document.querySelectorAll<HTMLImageElement>('[data-logo-light][data-logo-dark]').forEach((img) => {
-          const next = dark ? img.dataset.logoDark : img.dataset.logoLight;
-          if (next && img.getAttribute('src') !== next) img.setAttribute('src', next);
-        });
-      };
-
+      // 循环切换：浅色 → 深色 → 跟随系统 → 浅色
       document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
-        applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+        const now = getState();
+        const next: ThemeState =
+          now === 'light' ? 'dark' : now === 'dark' ? 'system' : 'light';
+        applyState(next);
         syncLogos();
       });
 
+      // 初始化：is:inline 已经设置好 data-theme-state 和 data-theme 了，
+      // 这里只需要刷新按钮文案和 logo 即可，不做任何会"改色"的操作。
+      refreshBtn(getState());
       syncLogos();
-
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-        if (localStorage.getItem(key)) return;
-        applyTheme(event.matches ? 'dark' : 'light');
-        syncLogos();
-      });
 
       const nodes = document.querySelectorAll('.reveal');
       if ('IntersectionObserver' in window) {

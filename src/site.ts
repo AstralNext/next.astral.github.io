@@ -5,6 +5,7 @@ export const site = {
   tagline: '把远方拉近一点',
   url: 'https://next.astral.fan',
   docsLegacy: 'https://astral.fan/',
+  blog: 'https://acg-n.cn/',
   docsGame: 'https://acg-n.cn/archive/category/AstralGame/',
   docsRaft: 'https://acg-n.cn/posts/Raft%E8%81%94%E6%9C%BA%E6%95%99%E7%A8%8B/',
   aml: 'https://aml.astral.fan/',

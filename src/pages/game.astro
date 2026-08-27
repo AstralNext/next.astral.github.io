@@ -2,8 +2,85 @@
 import Base from '../layouts/Base.astro';
 import ProductShot from '../components/ProductShot.astro';
 import { products, site } from '../site';
+import gamerules from '../../public/gamerules.json';
 
 const p = products.game;
+
+// 根据游戏配置生成技术标签数组
+function getTechTags(game: any): Array<{ label: string; tone: string }> {
+  const tags: Array<{ label: string; tone: string }> = [];
+  const platforms = game.platforms || {};
+  const windows = platforms.windows || {};
+  const anyPlatform = Object.values(platforms).find((v: any) => v) || {};
+
+  // DLL 注入
+  const inject = (windows as any).inject || (anyPlatform as any).inject;
+  if (inject) {
+    if (inject.type === 'mono') {
+      tags.push({ label: 'Mono 注入', tone: 'inject' });
+    } else {
+      tags.push({ label: 'DLL 注入', tone: 'inject' });
+    }
+  }
+
+  // 魔法墙
+  const magicWall = (windows as any).magic_wall || (anyPlatform as any).magic_wall;
+  if (magicWall) {
+    tags.push({ label: '魔法墙', tone: 'magic' });
+  }
+
+  // 网络 & 发现
+  const network = (windows as any).network || (anyPlatform as any).network;
+  const lanDiscover = (windows as any).lan_game_discover || (anyPlatform as any).lan_game_discover;
+
+  if (network?.protocol) {
+    // 有明确协议的一般是中继类
+    if (network.protocol.toLowerCase() === 'tcp') {
+      tags.push({ label: 'TCP 中继', tone: 'relay' });
+      if (lanDiscover?.type === 'udp_multicast') {
+        tags.push({ label: 'UDP 重组', tone: 'lan' });
+      }
+    } else {
+      tags.push({
+        label: `${network.protocol.toUpperCase()} 中继`,
+        tone: 'relay',
+      });
+    }
+  }
+
+  if (network?.enable_udp_broadcast_relay) {
+    // 已经有 TCP 中继就不再重复"中继"，否则单独标
+    const hasRelay = tags.some((t) => t.label.includes('中继'));
+    if (!hasRelay) {
+      tags.push({ label: '广播中继', tone: 'relay' });
+    }
+  }
+
+  if (lanDiscover) {
+    // 如果上面 TCP 中继分支已经处理了 UDP 重组，就跳过同 id 的 lan
+    const handled =
+      network?.protocol?.toLowerCase() === 'tcp' &&
+      lanDiscover.type === 'udp_multicast';
+    if (!handled) {
+      const typeMap: Record<string, { label: string; tone: string }> = {
+        udp_multicast: { label: 'UDP 组播', tone: 'lan' },
+        udp_broadcast: { label: 'UDP 广播', tone: 'lan' },
+        udp_probe: { label: 'UDP 探测', tone: 'lan' },
+        process_udp: { label: '进程嗅探', tone: 'lan' },
+        static_port: { label: '固定端口', tone: 'port' },
+      };
+      const match = typeMap[lanDiscover.type];
+      if (match) tags.push(match);
+    }
+  }
+
+  return tags;
+}
+
+// 读取游戏适配列表
+const gameList = (gamerules.games || [])
+  .filter((g: any) => g.show_in_picker !== false && g.id !== 'other')
+  .sort((a: any, b: any) => (a.sort || 999) - (b.sort || 999));
 ---
 
 <Base
@@ -32,6 +109,76 @@ const p = products.game;
     </div>
   </section>
 
+  <section class="section" id="games">
+    <div class="shell">
+      <div class="section-head reveal">
+        <p class="section-kicker amber">适配列表</p>
+        <h2 class="section-title">已适配游戏</h2>
+        <p class="section-lead">当前支持 <strong>{gameList.length}</strong> 款游戏的联机适配，持续更新中。</p>
+      </div>
+
+      <ul class="game-grid reveal" role="list">
+        {gameList.map((game: any) => {
+          const techTags = getTechTags(game);
+          return (
+            <li class="game-card" style={`--game-color: ${game.color || '#6B7280'};`}>
+              <div class="game-card-inner">
+                <div class="game-icon-wrap">
+                  {game.icon_asset ? (
+                    <img class="game-icon" src={`/${game.icon_asset}`} alt={game.name} width="64" height="64" loading="lazy" />
+                  ) : (
+                    <div class="game-icon-fallback" aria-hidden="true">
+                      {game.name?.charAt(0) || '?'}
+                    </div>
+                  )}
+                </div>
+                <div class="game-info">
+                  <h3 class="game-name">
+                    {game.name_zh || game.name}
+                    {game.name_zh && game.name_zh !== game.name && (
+                      <span class="game-name-en">{game.name}</span>
+                    )}
+                  </h3>
+                  {game.description && (
+                    <p class="game-desc">{game.description}</p>
+                  )}
+                  {techTags.length > 0 && (
+                    <div class="game-tags" role="list" aria-label="技术标签">
+                      {techTags.map((tag) => (
+                        <span class={`tech-tag tech-tag-${tag.tone}`} role="listitem">
+                          {tag.label}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  {game.steam_app_id && (
+                    <a
+                      class="game-steam"
+                      href={`https://store.steampowered.com/app/${game.steam_app_id}/`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-no-swup
+                    >
+                      <svg viewBox="0 0 50 50" width="14" height="14" fill="currentColor" aria-hidden="true">
+                        <path d="M 25 3 C 13.59 3 4.209375 11.680781 3.109375 22.800781 L 14.300781 28.529297 C 15.430781 27.579297 16.9 27 18.5 27 L 18.550781 27 C 18.940781 26.4 19.389375 25.649141 19.859375 24.869141 C 20.839375 23.259141 21.939531 21.439062 23.019531 20.039062 C 23.259531 15.569063 26.97 12 31.5 12 C 36.19 12 40 15.81 40 20.5 C 40 25.03 36.430937 28.740469 31.960938 28.980469 C 30.560938 30.060469 28.750859 31.160859 27.130859 32.130859 C 26.350859 32.610859 25.6 33.059219 25 33.449219 L 25 33.5 C 25 37.09 22.09 40 18.5 40 C 14.91 40 12 37.09 12 33.5 C 12 33.33 12.009531 33.17 12.019531 33 L 3.2792969 28.519531 C 4.9692969 38.999531 14.05 47 25 47 C 37.15 47 47 37.15 47 25 C 47 12.85 37.15 3 25 3 z M 31.5 14 C 27.92 14 25 16.92 25 20.5 C 25 24.08 27.92 27 31.5 27 C 35.08 27 38 24.08 38 20.5 C 38 16.92 35.08 14 31.5 14 z M 31.5 16 C 33.99 16 36 18.01 36 20.5 C 36 22.99 33.99 25 31.5 25 C 29.01 25 27 22.99 27 20.5 C 27 18.01 29.01 16 31.5 16 z M 18.5 29 C 17.71 29 16.960313 29.200312 16.320312 29.570312 L 19.640625 31.269531 C 20.870625 31.899531 21.350469 33.410625 20.730469 34.640625 C 20.280469 35.500625 19.41 36 18.5 36 C 18.11 36 17.729375 35.910469 17.359375 35.730469 L 14.029297 34.019531 C 14.289297 36.259531 16.19 38 18.5 38 C 20.99 38 23 35.99 23 33.5 C 23 31.01 20.99 29 18.5 29 z"/>
+                      </svg>
+                      Steam
+                    </a>
+                  )}
+                </div>
+              </div>
+              {game.grid_asset && (
+                <div class="game-grid-bg" aria-hidden="true">
+                  <img src={`/${game.grid_asset}`} alt="" loading="lazy" />
+                </div>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+
   <section class="section" style="padding-top: 0;">
     <div class="shell">
       <p class="note reveal">
@@ -40,3 +187,264 @@ const p = products.game;
     </div>
   </section>
 </Base>
+
+<style>
+  .game-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  }
+
+  .game-card {
+    position: relative;
+    border-radius: calc(var(--radius) + 0.15rem);
+    border: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface) 86%, transparent);
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+      transform 0.4s var(--ease),
+      border-color 0.25s ease,
+      box-shadow 0.4s var(--ease);
+  }
+
+  .game-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--game-color) 16%, transparent) 0%,
+      transparent 55%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .game-card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--game-color) 45%, var(--line));
+    box-shadow:
+      0 18px 44px color-mix(in srgb, var(--game-color) 16%, transparent),
+      0 0 0 1px color-mix(in srgb, var(--game-color) 18%, transparent);
+  }
+
+  .game-card:hover::before {
+    opacity: 1;
+  }
+
+  .game-card-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 1rem;
+    padding: 1.1rem;
+  }
+
+  .game-icon-wrap {
+    flex-shrink: 0;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1rem;
+    background: var(--bg-deep);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--game-color) 25%, var(--line)),
+      0 8px 20px color-mix(in srgb, var(--ink) 8%, transparent);
+  }
+
+  .game-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .game-icon-fallback {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: var(--game-color);
+  }
+
+  .game-info {
+    display: grid;
+    gap: 0.3rem;
+    align-content: start;
+    min-width: 0;
+  }
+
+  .game-name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.05rem;
+    line-height: 1.25;
+    color: var(--ink);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+
+  .game-name-en {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: -0.01em;
+  }
+
+  .game-desc {
+    font-size: 0.86rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  .game-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.1rem;
+  }
+
+  .tech-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.18rem 0.52rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    border: 1px solid transparent;
+    transition:
+      transform 0.2s var(--ease),
+      filter 0.2s ease;
+  }
+
+  .game-card:hover .tech-tag {
+    transform: translateY(-1px);
+    filter: saturate(1.1);
+  }
+
+  .tech-tag-inject {
+    background: color-mix(in srgb, var(--game-color) 16%, transparent);
+    border-color: color-mix(in srgb, var(--game-color) 38%, transparent);
+    color: var(--game-color);
+  }
+
+  .tech-tag-magic {
+    background: color-mix(in srgb, #a855f7 16%, transparent);
+    border-color: color-mix(in srgb, #a855f7 38%, transparent);
+    color: color-mix(in srgb, #a855f7 78%, var(--ink));
+  }
+
+  html[data-theme='dark'] .tech-tag-magic {
+    background: color-mix(in srgb, #c084fc 18%, transparent);
+    border-color: color-mix(in srgb, #c084fc 42%, transparent);
+    color: #e9d5ff;
+  }
+
+  .tech-tag-lan {
+    background: color-mix(in srgb, var(--teal) 14%, transparent);
+    border-color: color-mix(in srgb, var(--teal) 32%, transparent);
+    color: var(--teal-deep);
+  }
+
+  html[data-theme='dark'] .tech-tag-lan {
+    background: color-mix(in srgb, var(--teal) 18%, transparent);
+    border-color: color-mix(in srgb, var(--teal) 40%, transparent);
+    color: var(--teal);
+  }
+
+  .tech-tag-port {
+    background: color-mix(in srgb, #0ea5e9 14%, transparent);
+    border-color: color-mix(in srgb, #0ea5e9 32%, transparent);
+    color: #0369a1;
+  }
+
+  html[data-theme='dark'] .tech-tag-port {
+    background: color-mix(in srgb, #38bdf8 18%, transparent);
+    border-color: color-mix(in srgb, #38bdf8 40%, transparent);
+    color: #7dd3fc;
+  }
+
+  .tech-tag-relay {
+    background: color-mix(in srgb, #f59e0b 14%, transparent);
+    border-color: color-mix(in srgb, #f59e0b 32%, transparent);
+    color: #b45309;
+  }
+
+  html[data-theme='dark'] .tech-tag-relay {
+    background: color-mix(in srgb, #fbbf24 18%, transparent);
+    border-color: color-mix(in srgb, #fbbf24 40%, transparent);
+    color: #fcd34d;
+  }
+
+  .tech-tag-proto {
+    background: color-mix(in srgb, var(--ink) 8%, transparent);
+    border-color: color-mix(in srgb, var(--ink) 18%, transparent);
+    color: var(--ink-soft);
+  }
+
+  html[data-theme='dark'] .tech-tag-proto {
+    background: color-mix(in srgb, var(--ink-soft) 14%, transparent);
+    border-color: color-mix(in srgb, var(--ink-soft) 24%, transparent);
+    color: var(--ink-soft);
+  }
+
+  .game-steam {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--game-color);
+    text-decoration: none;
+    justify-self: start;
+    margin-top: 0.15rem;
+  }
+
+  .game-steam:hover {
+    color: var(--game-color);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .game-grid-bg {
+    position: absolute;
+    inset: auto -8% -20% auto;
+    width: 7rem;
+    height: 7rem;
+    z-index: 0;
+    opacity: 0.18;
+    transform: rotate(12deg);
+    pointer-events: none;
+    transition:
+      opacity 0.3s ease,
+      transform 0.5s var(--ease);
+  }
+
+  .game-grid-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.75rem;
+  }
+
+  .game-card:hover .game-grid-bg {
+    opacity: 0.3;
+    transform: rotate(4deg) scale(1.08);
+  }
+
+  @media (max-width: 480px) {
+    .game-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
