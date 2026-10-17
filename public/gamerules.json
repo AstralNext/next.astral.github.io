@@ -1,5 +1,5 @@
 {
-  "version": 9,
+  "version": 10,
   "games": [
     {
       "id": "baldurs_gate_3",
@@ -12,7 +12,7 @@
       "icon_asset": "games/baldurs_gate_3/icon.jpg",
       "grid_asset": "games/baldurs_gate_3/grid.jpg",
       "show_in_picker": true,
-      "sort": 12
+      "sort": 4
     },
     {
       "id": "minecraft",
@@ -25,7 +25,7 @@
       "icon_asset": "games/minecraft/icon.png",
       "grid_asset": "games/minecraft/grid.png",
       "show_in_picker": true,
-      "sort": 10,
+      "sort": 1,
       "platforms": {
         "windows": {
           "network": {
@@ -51,19 +51,38 @@
       "icon_asset":  "games/grand_theft_auto_v/icon.png",
       "grid_asset":  "games/grand_theft_auto_v/grid.png",
       "show_in_picker":  true,
-      "sort":  15,
-      "platforms":  {
-        "windows":  {
+      "sort": 2
+    },
+    {
+      "id":  "sid_meier's_civilization_vi",
+      "name":  "Sid Meier's Civilization VI",
+      "name_zh": "文明6",
+      "description": "同时支持互联网(包含跨平台联机)以及局域网联机",
+      "color":  "#A0522D",
+      "icon":  "hardware",
+      "steam_app_id": 289070,
+      "icon_asset":  "games/sid_meier's_civilization_vi/icon.png",
+      "grid_asset":  "games/sid_meier's_civilization_vi/grid.png",
+      "show_in_picker":  true,
+      "sort":  3,
+      "platforms": {
+        "windows": {
           "magic_wall": {
-            "GTA5_Enhanced.exe": [
-              { "action": "allow", "protocol": "udp", "direction": "both", "local_ip": "10.126.126.0/24", "remote_ip": "10.126.126.0/24" },
-              { "action": "allow", "protocol": "udp", "direction": "both", "local_port": "6672", "remote_port": "61456" },
-              { "action": "block", "protocol": "udp", "direction": "both", "local_port": "6672" }
-            ],
-            "GTA5.exe": [
-              { "action": "allow", "protocol": "udp", "direction": "both", "local_ip": "10.126.126.0/24", "remote_ip": "10.126.126.0/24" },
-              { "action": "allow", "protocol": "udp", "direction": "both", "local_port": "6672", "remote_port": "61456" },
-              { "action": "block", "protocol": "udp", "direction": "both", "local_port": "6672" }
+          "enabled": true,
+          "process": ["steam.exe", "CivilizationVI.exe", "CivilizationVI_DX12.exe"],
+          "rules":  [
+              {
+                "action": "block",
+                "protocol": "udp",
+                "direction": "both",
+                "remote_port": "3478"
+              },
+              {
+                "action": "block",
+                "protocol": "udp",
+                "direction": "both",
+                "remote_port": "4379-4400"
+              }
             ]
           }
         }
@@ -103,7 +122,7 @@
       "icon_asset": "games/raft/icon.png",
       "grid_asset": "games/raft/grid.png",
       "show_in_picker": true,
-      "sort": 22,
+      "sort": 5,
       "platforms": {
         "windows": {
           "network": {
@@ -140,7 +159,7 @@
       "icon_asset": "games/stardew_valley/icon.png",
       "grid_asset": "games/stardew_valley/grid.png",
       "show_in_picker": true,
-      "sort": 30,
+      "sort": 6,
       "platforms": {
         "windows": {
           "lan_game_discover": {
@@ -160,7 +179,7 @@
       "icon_asset": "games/terraria/icon.png",
       "grid_asset": "games/terraria/grid.png",
       "show_in_picker": true,
-      "sort": 40
+      "sort": 7
     },
     {
       "id": "valheim",
@@ -210,7 +229,7 @@
       "icon_asset": "games/palworld/icon.png",
       "grid_asset": "games/palworld/grid.png",
       "show_in_picker": true,
-      "sort": 60
+      "sort": 8
     },
     {
       "id": "factorio",
@@ -222,7 +241,7 @@
       "icon_asset": "games/factorio/icon.png",
       "grid_asset": "games/factorio/grid.png",
       "show_in_picker": true,
-      "sort": 70
+      "sort": 11
     },
     {
       "id": "dont_starve_together",
@@ -234,7 +253,7 @@
       "icon_asset": "games/dont_starve_together/icon.png",
       "grid_asset": "games/dont_starve_together/grid.png",
       "show_in_picker": true,
-      "sort": 80
+      "sort": 9
     },
     {
       "id": "project_zomboid",
@@ -246,7 +265,7 @@
       "icon_asset": "games/project_zomboid/icon.png",
       "grid_asset": "games/project_zomboid/grid.png",
       "show_in_picker": true,
-      "sort": 90
+      "sort": 10
     },
     {
       "id": "v_rising",
@@ -258,7 +277,7 @@
       "icon_asset": "games/v_rising/icon.png",
       "grid_asset": "games/v_rising/grid.png",
       "show_in_picker": true,
-      "sort": 100
+      "sort": 12
     },
     {
       "id": "satisfactory",
@@ -282,7 +301,7 @@
       "icon_asset": "games/seven_days_to_die/icon.png",
       "grid_asset": "games/seven_days_to_die/grid.png",
       "show_in_picker": true,
-      "sort": 120
+      "sort": 13
     },
     {
       "id": "ark",
@@ -294,7 +313,7 @@
       "icon_asset": "games/ark/icon.png",
       "grid_asset": "games/ark/grid.png",
       "show_in_picker": true,
-      "sort": 130
+      "sort": 14
     },
     {
       "id": "rust",
@@ -306,7 +325,7 @@
       "icon_asset": "games/rust/icon.png",
       "grid_asset": "games/rust/grid.png",
       "show_in_picker": true,
-      "sort": 140
+      "sort": 15
     },
     {
       "id": "forged_alliance",
@@ -349,6 +368,7 @@
       "id": "payday_the_heist",
       "name": "PAYDAY: The Heist",
       "name_zh": "收获日：掠夺",
+      "description": "联机时请关闭加速Steam",
       "color": "#A0522D",
       "icon": "hardware",
       "steam_app_id": 24240,
@@ -359,7 +379,9 @@
       "platforms": {
         "windows": {
           "magic_wall": {
-            "steam.exe": [
+          "enabled": true,
+          "process": ["steam.exe"],
+          "rules":  [
               {
                 "action": "block",
                 "protocol": "udp",
@@ -381,17 +403,20 @@
       "id": "left_4_dead",
       "name": "Left 4 Dead",
       "name_zh": "求生之路",
+      "description": "好友列表联机时请关闭加速Steam",
       "color": "#A0522D",
       "icon": "hardware",
       "steam_app_id": 500,
       "icon_asset": "games/left_4_dead/icon.png",
       "grid_asset": "games/left_4_dead/grid.png",
       "show_in_picker": true,
-      "sort": 160,
+      "sort": 16,
       "platforms": {
         "windows": {
           "magic_wall": {
-            "steam.exe": [
+          "enabled": true,
+          "process": ["steam.exe"],
+          "rules":  [
               {
                 "action": "block",
                 "protocol": "udp",
@@ -413,17 +438,20 @@
       "id": "left_4_dead_2",
       "name": "Left 4 Dead 2",
       "name_zh": "求生之路2",
+      "description": "好友列表联机时请关闭加速Steam",
       "color": "#A0522D",
       "icon": "hardware",
       "steam_app_id": 550,
       "icon_asset": "games/left_4_dead_2/icon.png",
       "grid_asset": "games/left_4_dead_2/grid.png",
       "show_in_picker": true,
-      "sort": 170,
+      "sort": 17,
       "platforms": {
         "windows": {
           "magic_wall": {
-            "steam.exe": [
+          "enabled": true,
+          "process": ["steam.exe"],
+          "rules":  [
               {
                 "action": "block",
                 "protocol": "udp",
@@ -445,18 +473,35 @@
       "id": "sudden_strike_II",
       "name": "Sudden Strike II",
       "name_zh": "突袭2",
+      "description": "无法联机时请关闭其他联机软件",
       "color": "#A0522D",
       "icon": "hardware",
       "steam_app_id": 612520,
       "icon_asset": "games/sudden_strike_II/icon.png",
       "grid_asset": "games/sudden_strike_II/grid.png",
       "show_in_picker": true,
-      "sort": 180
+      "sort": 180,
+      "platforms": {
+        "windows": {
+          "magic_wall": {
+          "enabled": true,
+          "process": ["*"],
+          "rules": [
+              {
+                "action": "block",
+                "protocol": "udp",
+                "direction": "both",
+                "remote_port": "1900"
+              }
+            ]
+          }
+        }
+      }
     },
     {
       "id": "other",
-      "name": "其他",
-      "name_zh": "其他",
+      "name": "other game",
+      "name_zh": "其他游戏",
       "color": "#6B7280",
       "icon": "sports_esports_outlined",
       "show_in_picker": true,
