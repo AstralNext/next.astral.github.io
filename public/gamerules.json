@@ -1,5 +1,5 @@
 {
-  "version": 10,
+  "version": 11,
   "games": [
     {
       "id": "baldurs_gate_3",
@@ -44,7 +44,7 @@
       "id":  "grand_theft_auto_v",
       "name":  "Grand Theft Auto V",
       "name_zh": "侠盗猎车手5",
-      "description": "同时支持传承版和增强版以及跨平台联机",
+      "description": "支持传承版和增强版以及跨平台联机",
       "color":  "#A0522D",
       "icon":  "hardware",
       "steam_app_id": 3240220,
@@ -57,7 +57,7 @@
       "id":  "sid_meier's_civilization_vi",
       "name":  "Sid Meier's Civilization VI",
       "name_zh": "文明6",
-      "description": "同时支持互联网(包含跨平台联机)以及局域网联机",
+      "description": "支持互联网(包含跨平台联机)以及局域网联机",
       "color":  "#A0522D",
       "icon":  "hardware",
       "steam_app_id": 289070,
@@ -403,7 +403,7 @@
       "id": "left_4_dead",
       "name": "Left 4 Dead",
       "name_zh": "求生之路",
-      "description": "好友列表联机时请关闭加速Steam",
+      "description": "联机时请停止加速Steam",
       "color": "#A0522D",
       "icon": "hardware",
       "steam_app_id": 500,
@@ -438,7 +438,7 @@
       "id": "left_4_dead_2",
       "name": "Left 4 Dead 2",
       "name_zh": "求生之路2",
-      "description": "好友列表联机时请关闭加速Steam",
+      "description": "联机时请停止加速Steam",
       "color": "#A0522D",
       "icon": "hardware",
       "steam_app_id": 550,
@@ -492,6 +492,41 @@
                 "protocol": "udp",
                 "direction": "both",
                 "remote_port": "1900"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "the_binding_of_rsaac_rebirth",
+      "name": "The Binding of Isaac Rebirth",
+      "name_zh": "以撒的结合：重生",
+      "description": "联机时请停止加速Steam",
+      "color": "#A0522D",
+      "icon": "hardware",
+      "steam_app_id": 250900,
+      "icon_asset": "games/the_binding_of_rsaac_rebirth/icon.png",
+      "grid_asset": "games/the_binding_of_rsaac_rebirth/grid.png",
+      "show_in_picker": true,
+      "sort": 18,
+      "platforms": {
+        "windows": {
+          "magic_wall": {
+          "enabled": true,
+          "process": ["steam.exe"],
+          "rules":  [
+              {
+                "action": "block",
+                "protocol": "udp",
+                "direction": "both",
+                "remote_port": "3478"
+              },
+              {
+                "action": "block",
+                "protocol": "udp",
+                "direction": "both",
+                "remote_port": "4379-4400"
               }
             ]
           }
