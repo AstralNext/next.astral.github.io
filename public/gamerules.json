@@ -1,5 +1,5 @@
 {
-  "version": 11,
+  "version": 12,
   "games": [
     {
       "id": "baldurs_gate_3",
@@ -84,6 +84,12 @@
                 "remote_port": "4379-4400"
               }
             ]
+          }
+        },
+        "android": {
+          "lan_nat": {
+            "enabled": true,
+            "ports": [62900, 62056]
           }
         }
       }
