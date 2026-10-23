@@ -1,5 +1,5 @@
 {
-  "version": 13,
+  "version": 14,
   "games": [
     {
       "id": "baldurs_gate_3",
@@ -507,7 +507,7 @@
     {
       "id": "sudden_strike_gold",
       "name": "Sudden Strike Gold",
-      "name_zh": "突袭1.21",
+      "name_zh": "突袭",
       "description": "无法联机时请关闭其他联机软件",
       "color": "#B8860B",
       "icon": "military_tech",
