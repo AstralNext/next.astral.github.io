@@ -1,5 +1,5 @@
 {
-  "version": 12,
+  "version": 13,
   "games": [
     {
       "id": "baldurs_gate_3",
@@ -494,6 +494,36 @@
           "process": ["*"],
           "rules": [
               {
+                "action": "block",
+                "protocol": "udp",
+                "direction": "both",
+                "remote_port": "1900"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "sudden_strike_gold",
+      "name": "Sudden Strike Gold",
+      "name_zh": "突袭1.21",
+      "description": "无法联机时请关闭其他联机软件",
+      "color": "#B8860B",
+      "icon": "military_tech",
+      "steam_app_id": 612300,
+      "icon_asset": "games/sudden_strike_gold/icon.png",
+      "grid_asset": "games/sudden_strike_gold/grid.png",
+      "show_in_picker": true,
+      "sort": 181,
+      "platforms": {
+        "windows": {
+          "magic_wall": {
+            "enabled": true,
+            "process": ["*"],
+            "rules": [
+              {
+                "name": "block udp 1900",
                 "action": "block",
                 "protocol": "udp",
                 "direction": "both",
