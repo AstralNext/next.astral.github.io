@@ -409,7 +409,7 @@
       "id": "left_4_dead",
       "name": "Left 4 Dead",
       "name_zh": "求生之路",
-      "description": "联机时请停止加速Steam",
+      "description": "好友列表联机时请停止加速Steam",
       "color": "#A0522D",
       "icon": "hardware",
       "steam_app_id": 500,
@@ -444,7 +444,7 @@
       "id": "left_4_dead_2",
       "name": "Left 4 Dead 2",
       "name_zh": "求生之路2",
-      "description": "联机时请停止加速Steam",
+      "description": "好友列表联机时请停止加速Steam",
       "color": "#A0522D",
       "icon": "hardware",
       "steam_app_id": 550,
@@ -546,6 +546,76 @@
       "grid_asset": "games/the_binding_of_rsaac_rebirth/grid.png",
       "show_in_picker": true,
       "sort": 18,
+      "platforms": {
+        "windows": {
+          "magic_wall": {
+          "enabled": true,
+          "process": ["steam.exe"],
+          "rules":  [
+              {
+                "action": "block",
+                "protocol": "udp",
+                "direction": "both",
+                "remote_port": "3478"
+              },
+              {
+                "action": "block",
+                "protocol": "udp",
+                "direction": "both",
+                "remote_port": "4379-4400"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "the_forest",
+      "name": "The Forest",
+      "name_zh": "森林",
+      "description": "点对点联机时请停止加速Steam",
+      "color": "#A0522D",
+      "icon": "hardware",
+      "steam_app_id": 242760,
+      "icon_asset": "games/the_forest/icon.png",
+      "grid_asset": "games/the_forest/grid.png",
+      "show_in_picker": true,
+      "sort": 19,
+      "platforms": {
+        "windows": {
+          "magic_wall": {
+          "enabled": true,
+          "process": ["steam.exe"],
+          "rules":  [
+              {
+                "action": "block",
+                "protocol": "udp",
+                "direction": "both",
+                "remote_port": "3478"
+              },
+              {
+                "action": "block",
+                "protocol": "udp",
+                "direction": "both",
+                "remote_port": "4379-4400"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "sons_of_the_forest",
+      "name": "Sons Of The Forest",
+      "name_zh": "森林之子",
+      "description": "点对点联机时请停止加速Steam",
+      "color": "#A0522D",
+      "icon": "hardware",
+      "steam_app_id": 1326470,
+      "icon_asset": "games/sons_of_the_forest/icon.png",
+      "grid_asset": "games/sons_of_the_forest/grid.png",
+      "show_in_picker": true,
+      "sort": 20,
       "platforms": {
         "windows": {
           "magic_wall": {
